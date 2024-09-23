@@ -20,5 +20,5 @@ jobs:
           script: |
             cd ~/gau/gauphimv2
             git pull
-            ocker-compose stop gauphimv2 
+            docker-compose stop gauphimv2 
             docker-compose up -d gauphimv2
