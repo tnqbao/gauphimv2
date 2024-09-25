@@ -1,11 +1,7 @@
 import React from "react";
 // import { useRouter } from "next/router";
 
-// type FieldType = {
-//   username?: string;
-//   password?: string;
-//   externalToken?: string;
-// };
+
 
 // const onFinish = () => async (values: FieldType) => {
 //   console.log("Success:" + values.username );
