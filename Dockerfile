@@ -1,5 +1,5 @@
 #install and buidl
-FROM node:16-alpine AS builder
+FROM node:18-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm cache clean --force && npm install --legacy-peer-deps
@@ -8,7 +8,7 @@ RUN rm -rf .next
 RUN npm run build
 
 #deploy
-FROM node:16-alpine
+FROM node:18-alpine
 WORKDIR /app
 COPY --from=builder /app .
 RUN npm install --production --legacy-peer-deps
