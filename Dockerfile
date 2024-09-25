@@ -3,6 +3,9 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 COPY package*.json ./
+
+RUN rm -rf .next
+
 RUN npm install
 
 COPY . .

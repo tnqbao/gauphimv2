@@ -13,6 +13,7 @@
     "antd": "^5.21.0",
     "gauphimv2": "file:",
     "next": "14.2.13",
+    "next-transpile-modules": "^10.0.1",
     "react": "^18",
     "react-dom": "^18"
   },
