@@ -1,12 +1,6 @@
 import React from 'react';
 import { Breadcrumb, Layout, theme } from 'antd';
-import HeaderComp from '../components/header'; 
-const { Header, Content, Footer } = Layout;
-
-const items = new Array(15).fill(null).map((_, index) => ({
-  key: index + 1,
-  label: `nav ${index + 1}`,
-}));
+const {Footer, Content } = Layout;
 
 const App: React.FC = () => {
   const {

@@ -1,13 +1,20 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, Image } from "antd";
+
+
+type FieldType = {
+  username?: string;
+  password?: string;
+  externalToken?: string;
+};
 
 const Login: React.FC = () => {
   const router = useRouter();
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: FieldType) => {
     try {
-      const response = await fetch("http://localhost:8080/api/users/login", {
+      const response = await fetch("https://api.daudoo.com/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -24,7 +31,6 @@ const Login: React.FC = () => {
       localStorage.setItem("token", data.token);
       alert("Login success: " + data.token);
 
-      // Redirect to home after successful login
       router.push("../");
     } catch (error) {
       console.error("Error:", error);
@@ -36,7 +42,9 @@ const Login: React.FC = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="flex flex-col md:flex-row bg-white p-2 border rounded-lg shadow-lg max-w-4xl w-full">
         <div className="flex flex-wrap flex-1 p-4 items-center justify-center">
-          <h2 className="text-center text-2xl font-bold mb-6 w-full">Welcome back!</h2>
+          <h2 className="text-center text-2xl font-bold mb-6 w-full">
+            Welcome back!
+          </h2>
           <Form
             name="basic"
             initialValues={{ remember: false }}
@@ -47,7 +55,9 @@ const Login: React.FC = () => {
             <Form.Item
               label="Username"
               name="username"
-              rules={[{ required: true, message: "Please input your username!" }]}
+              rules={[
+                { required: true, message: "Please input your username!" },
+              ]}
             >
               <Input />
             </Form.Item>
@@ -55,12 +65,18 @@ const Login: React.FC = () => {
             <Form.Item
               label="Password"
               name="password"
-              rules={[{ required: true, message: "Please input your password!" }]}
+              rules={[
+                { required: true, message: "Please input your password!" },
+              ]}
             >
               <Input.Password />
             </Form.Item>
 
-            <Form.Item name="remember" valuePropName="checked" className="text-center">
+            <Form.Item
+              name="remember"
+              valuePropName="checked"
+              className="text-center"
+            >
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
@@ -79,10 +95,10 @@ const Login: React.FC = () => {
         <div className="hidden md:block border-l mx-2"></div>
 
         <div className="hidden md:flex flex-1 justify-center items-center">
-          <img
+          <Image
+            className="max-w-full h-auto"
             src="https://i.imgur.com/aMY5YTJ.png"
             alt="Login illustration"
-            className="max-w-full h-auto"
           />
         </div>
       </div>
