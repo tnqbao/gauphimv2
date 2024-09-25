@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -20,20 +22,17 @@ jobs:
       - name: Set permissions for SSH key
         run: chmod 600 ~/.ssh/id_rsa
 
-      - name: SSH connect and pull latest config
+      - name: SSH connect, pull latest code, and restart Docker
         env:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
-        run: ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /home/debian/gau/gauphimv2 && git pull origin main"
-
-      - name: Stop All Docker services
-        env:
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-        run: ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /home/debian/gau && docker-compose down gauphimv2"
-
-      - name: Start All Docker services
-        env:
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-        run: ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /home/debian/gau && docker-compose up -d gauphimv2"
+        run: |
+          ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+            cd /home/debian/gau/gauphimv2 && \
+            git pull origin main && \
+            cd /home/debian/gau && \
+            docker-compose down gauphimv2 && \
+            docker-compose up -d gauphimv2
+          "
+      - name: Remove SSH key
+        run: rm ~/.ssh/id_rsa
