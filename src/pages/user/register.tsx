@@ -1,42 +1,42 @@
 import React from "react";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 
-type FieldType = {
-  username?: string;
-  password?: string;
-  externalToken?: string;
-};
+// type FieldType = {
+//   username?: string;
+//   password?: string;
+//   externalToken?: string;
+// };
 
-const onFinish = () => async (values: FieldType) => {
-  console.log("Success:" + values.username );
-  alert("Login success" + values.username);
-    try {
-      const response = await fetch("https://gauapi.daudoo.com/api/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+// const onFinish = () => async (values: FieldType) => {
+//   console.log("Success:" + values.username );
+//   alert("Login success" + values.username);
+//     try {
+//       const response = await fetch("https://gauapi.daudoo.com/api/user/login", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(values),
+//       });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      console.log("Response data:", data);
+//       if (!response.ok) {
+//         throw new Error("Network response was not ok");
+//       }
+//       const data = await response.json();
+//       console.log("Response data:", data);
 
-      localStorage.setItem("token", data.token);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-};
+//       localStorage.setItem("token", data.token);
+//     } catch (error) {
+//       console.error("Error:", error);
+//     }
+// };
 
-const onFinishFailed = (errorInfo: any) => {
-  console.log("Failed:", errorInfo);
-};
+// const onFinishFailed = (errorInfo: any) => {
+//   console.log("Failed:", errorInfo);
+// };
 
 const Register: React.FC = () => {
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <div className="flex flex-col min-h-screen">
