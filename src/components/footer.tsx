@@ -1,11 +1,11 @@
-import React from 'react';
-
+import React from "react";
+import { Layout } from "antd";
+const { Footer } = Layout;
 const FooterComp: React.FC = () => {
-
   return (
-    <footer className="flex flex-col md:flex-row justify-evenly items-center bg-[#121111] text-white p-4 gap-3 h-24 ">
-        Footer
-    </footer>
+    <Footer className="bg-[#121111] flex flex-wrap shadow-md justify-between items-center px-4 py-3 h-auto">
+      Ant Design ©{new Date().getFullYear()} Created by Ant UED
+    </Footer>
   );
 };
 

@@ -4,7 +4,7 @@ import '@/styles/globals.css';
 import { AppProps } from 'next/app';
 import { Flex, Layout } from 'antd';
 
-const {Footer, Content } = Layout;
+const {Content } = Layout;
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <Layout>
       <HeaderComp />
       <Content ><Component {...pageProps} /></Content>
-      <Footer ><FooterComp /></Footer>
+      <FooterComp />
     </Layout>
     </Flex>
     </>

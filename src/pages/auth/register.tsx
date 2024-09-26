@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Button, Checkbox, Form, Input, Image } from "antd";
+import { Button, Form, Input, Image } from "antd";
 
 
 type FieldType = {
@@ -9,12 +9,12 @@ type FieldType = {
   externalToken?: string;
 };
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const router = useRouter();
 
   const onFinish = async (values: FieldType) => {
     try {
-      const response = await fetch("https://api.daudoo.com/api/users/login", {
+        const response = await fetch("https://localhost:8080/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,9 +41,17 @@ const Login: React.FC = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="flex flex-col md:flex-row bg-white p-2 border rounded-lg shadow-lg max-w-4xl w-full">
+        <div className="hidden md:flex flex-1 justify-center items-center">
+          <Image
+            className="max-w-full h-auto"
+            src="https://i.imgur.com/I9Qjk2t.png"
+            alt="Login illustration"
+          />
+        </div>
+        <div className="hidden md:block border-l mx-2"></div>
         <div className="flex flex-wrap flex-1 p-4 items-center justify-center">
           <h2 className="text-center text-2xl font-bold mb-6 w-full">
-            Welcome back!
+            Create new account
           </h2>
           <Form
             name="basic"
@@ -72,13 +80,13 @@ const Login: React.FC = () => {
               <Input.Password />
             </Form.Item>
 
-            <Form.Item
+            {/* <Form.Item
               name="remember"
               valuePropName="checked"
               className="text-center"
             >
               <Checkbox>Remember me</Checkbox>
-            </Form.Item>
+            </Form.Item> */}
 
             <Form.Item className="text-center">
               <Button type="primary" size="large" htmlType="submit">
@@ -91,19 +99,9 @@ const Login: React.FC = () => {
             </Form.Item>
           </Form>
         </div>
-
-        <div className="hidden md:block border-l mx-2"></div>
-
-        <div className="hidden md:flex flex-1 justify-center items-center">
-          <Image
-            className="max-w-full h-auto"
-            src="https://i.imgur.com/aMY5YTJ.png"
-            alt="Login illustration"
-          />
-        </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;
