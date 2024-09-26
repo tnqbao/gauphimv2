@@ -7,7 +7,6 @@ RUN yarn build
 
 FROM node:18-alpine AS production
 WORKDIR /app
-COPY --from=builder /app /app 
-RUN yarn install --production --frozen-lockfile
+COPY --from=builder /app /app
 CMD ["yarn", "start"]
 EXPOSE 3000
