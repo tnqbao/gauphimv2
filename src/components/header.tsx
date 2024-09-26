@@ -8,7 +8,7 @@ const HeaderComp: React.FC = () => {
   const router = useRouter();
 
   const handleButtonClick = (page: string) => {
-    router.push(`/user/${page}`);
+    router.push(`/auth/${page}`);
   };
 
   return (

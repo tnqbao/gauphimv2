@@ -11,6 +11,7 @@
   "dependencies": {
     "@ant-design/cssinjs": "^1.21.1",
     "antd": "^5.21.0",
+    "axios": "^1.7.7",
     "gauphimv2": "file:",
     "next": "14.2.13",
     "next-transpile-modules": "^10.0.1",
