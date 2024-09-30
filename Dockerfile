@@ -8,7 +8,7 @@ RUN yarn build
 FROM node:18-alpine AS production
 WORKDIR /app
 COPY --from=builder /app /app
-COPY start.sh /app/start.sh  
+COPY ./start.sh /app/start.sh  
 RUN chmod +x /app/start.sh  
 CMD ["sh", "/app/start.sh"] 
 EXPOSE 3000
