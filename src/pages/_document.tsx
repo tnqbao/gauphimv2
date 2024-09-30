@@ -1,13 +1,23 @@
-import { Html, Head, Main, NextScript } from 'next/document'
- 
-export default function Document() {
-  return (
-    <Html>
-      <Head />
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  )
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
+import { i18n } from 'next-i18next';
+
+class MyDocument extends Document {
+  static async getInitialProps(ctx: DocumentContext) {
+    const initialProps = await Document.getInitialProps(ctx);
+    return { ...initialProps };
+  }
+
+  render() {
+    return (
+      <Html lang={i18n?.language || 'en'}>
+        <Head />
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
 }
+
+export default MyDocument;

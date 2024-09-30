@@ -1,29 +1,30 @@
 import React from "react";
-import axios from "axios";
+import { GetServerSideProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from "next/router";
 import { Button, Checkbox, Form, Input, Image } from "antd";
+import { useTranslation } from 'react-i18next';
+import axiosInstance from "@/utils/axiosConfig";
 
 type FieldType = {
   username?: string;
   password?: string;
-  externalToken?: string;
+  keepMeLogin?: string;
 };
 
 const Login: React.FC = () => {
   const router = useRouter();
-
+  const { t } = useTranslation('login');
   const onFinish = async (values: FieldType) => {
+    const typeWithStringField = {
+      ...values,
+      keepMeLogin: values.keepMeLogin?.toString() || "false"  
+    };
     try {
-      const response = await axios.post("https://api.daudoo.com/api/auth/login", values, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
+      const response = await axiosInstance.post('/api/auth/login', typeWithStringField);
       const data = response.data;
       console.log("Response data:", data);
-      localStorage.setItem("token", data.token);
-
+      alert("Login success: " + data.token);
       router.push("../");
     } catch (error) {
       console.error("Error:", error);
@@ -35,17 +36,18 @@ const Login: React.FC = () => {
       <div className="flex flex-col md:flex-row bg-white p-2 border rounded-lg shadow-lg max-w-4xl w-full">
         <div className="flex flex-wrap flex-1 p-4 items-center justify-center">
           <h2 className="text-center text-2xl font-bold mb-6 w-full">
-            Welcome back!
+            {t('title')}
           </h2>
           <Form
             name="basic"
             initialValues={{ remember: false }}
             onFinish={onFinish}
             autoComplete="off"
+            labelCol={{ span: 24 }}
             className="flex flex-col justify-evenly w-full h-full"
           >
             <Form.Item
-              label="Username"
+              label={t('username')}
               name="username"
               rules={[{ required: true, message: "Please input your username!" }]}
             >
@@ -53,25 +55,25 @@ const Login: React.FC = () => {
             </Form.Item>
 
             <Form.Item
-              label="Password"
+              label={t('password')}
               name="password"
               rules={[{ required: true, message: "Please input your password!" }]}
             >
               <Input.Password />
             </Form.Item>
 
-            <Form.Item name="remember" valuePropName="checked" className="text-center">
-              <Checkbox>Remember me</Checkbox>
+            <Form.Item name="keepMeLogin" valuePropName="checked" className="text-center">
+              <Checkbox>{t('keepMeLoggedIn')}</Checkbox>
             </Form.Item>
 
             <Form.Item className="text-center">
               <Button type="primary" size="large" htmlType="submit">
-                Submit
+                {t('submitButton')}
               </Button>
             </Form.Item>
 
             <Form.Item className="text-right">
-              <a href="../user/register">No account? Create one.</a>
+              <a href="../auth/register"> {t('notRegistered')}</a>
             </Form.Item>
           </Form>
         </div>
@@ -88,6 +90,17 @@ const Login: React.FC = () => {
       </div>
     </div>
   );
+};
+
+
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  const currentLocale = locale || 'en';
+  return {
+    props: {
+      ...(await serverSideTranslations(currentLocale, ['login', 'common'])),
+    },
+  };
 };
 
 export default Login;
