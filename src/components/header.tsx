@@ -1,11 +1,13 @@
 import React from "react";
 import { Button, Layout } from "antd";
 import { useRouter } from "next/router";
+import { useTranslation } from 'react-i18next';
 
 const { Header } = Layout;
 
 const HeaderComp: React.FC = () => {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const handleButtonClick = (page: string) => {
     router.push(`/auth/${page}`);
@@ -17,7 +19,9 @@ const HeaderComp: React.FC = () => {
       </div>
 
       <div className="text-center flex-grow min-w-[150px]">
-        <h1 className="text-2xl md:text-3xl font-bold text-white">GẤU PHIM</h1>
+        <h1 suppressHydrationWarning className="text-2xl md:text-3xl font-bold text-white">
+          {t('title')}
+        </h1>
       </div>
 
       <div className="flex space-x-2 justify-end w-full md:w-auto mt-2 md:mt-0">
@@ -26,14 +30,14 @@ const HeaderComp: React.FC = () => {
           className="px-4 py-2 text-base w-full md:w-auto"
           onClick={() => handleButtonClick("login")}
         >
-          Đăng nhập
+          {t('login')}
         </Button>
         <Button
           type="default"
           className="px-4 py-2 text-base w-full md:w-auto"
           onClick={() => handleButtonClick("register")}
         >
-          Đăng ký
+          {t('register')}
         </Button>
       </div>
     </Header>

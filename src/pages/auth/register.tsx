@@ -14,7 +14,7 @@ const Register: React.FC = () => {
 
   const onFinish = async (values: FieldType) => {
     try {
-        const response = await fetch("https://localhost:8080/api/auth/register", {
+        const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,22 +80,16 @@ const Register: React.FC = () => {
               <Input.Password />
             </Form.Item>
 
-            {/* <Form.Item
-              name="remember"
-              valuePropName="checked"
-              className="text-center"
-            >
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item> */}
 
             <Form.Item className="text-center">
               <Button type="primary" size="large" htmlType="submit">
-                Submit
+                {/* {t('register')} */}
               </Button>
             </Form.Item>
 
             <Form.Item className="text-right">
-              <a href="../user/register">No account? Create one.</a>
+              <a href="../user/register">
+              </a>
             </Form.Item>
           </Form>
         </div>

@@ -1,0 +1,9 @@
+{
+  "title": "Gau Cinema",
+  "login": "Login",
+  "register": "Register", 
+  "username": "Username",
+  "password": "Password",
+  "pleaseInputUsername": "Please input your username!",
+  "pleaseInputPassword": "Please input your password!"
+}
