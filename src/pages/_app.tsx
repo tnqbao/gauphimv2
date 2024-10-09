@@ -16,7 +16,6 @@ function App({ Component, pageProps }: AppProps) {
       i18n.changeLanguage(browserLanguage);
     }
   }, []);
-
   return (
     <Layout>
       <HeaderComp />
