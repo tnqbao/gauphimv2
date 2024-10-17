@@ -3,5 +3,7 @@
   "login": "Login",
   "register": "Register", 
   "username": "Username",
-  "password": "Password"
+  "password": "Password",
+  "categories" : "Home/Series/Movies/Animation/Shows/Coming soon",
+  "watch" : "Watch now"
 }

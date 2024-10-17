@@ -17,7 +17,7 @@ function App({ Component, pageProps }: AppProps) {
     }
   }, []);
   return (
-    <Layout>
+    <Layout className='bg-black/90'>
       <HeaderComp />
       <Content>
         <Component {...pageProps} />

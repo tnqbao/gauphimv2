@@ -5,8 +5,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "react-i18next";
 import { Button, Checkbox, Form, Input, Image, Flex} from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { userApiInstance } from "@/utils/axiosConfig";
-import { useCookies } from 'react-cookie'; 
+import { userApiInstance } from "@/utils/axiosConfig"; 
 
 
 type FieldType = {
@@ -16,7 +15,6 @@ type FieldType = {
 };
 
 const Login: React.FC = () => {
-  const [cookies] = useCookies(['auth_token']);
   const [form] = Form.useForm();
   const router = useRouter();
   const { t } = useTranslation("login");
@@ -25,13 +23,15 @@ const Login: React.FC = () => {
       ...values,
       keepMeLogin: values.keepMeLogin?.toString() ?? "false",
     };
+    const username = localStorage.getItem('username');
+    if (username) router.push("../");
     try {
       const response = await userApiInstance.post(
         "/api/auth/login",
         typeWithStringField
       );
       if (response.status === 200) {
-        alert(cookies.auth_token)
+        localStorage.setItem("username", response.data.username)
         router.push("../");
       }
     } catch {
@@ -112,8 +112,9 @@ const Login: React.FC = () => {
         <div className="hidden md:flex flex-1 justify-center items-center">
           <Image
             className="max-w-full h-auto"
-            src="https://i.imgur.com/I9Qjk2t.png"
+            src="https://i.imgur.com/YvZjVti.png"
             alt="Login illustration"
+            preview={false}
           />
         </div>
       </div>

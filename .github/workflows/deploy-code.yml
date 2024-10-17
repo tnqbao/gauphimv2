@@ -32,7 +32,7 @@ jobs:
             git pull origin main && \
             cd /home/debian/gau && \
             docker-compose down gauphimv2 && \
-            docker-compose up -d gauphimv2
+            docker-compose up -d --build gauphimv2
           "
       - name: Remove SSH key
         run: rm ~/.ssh/id_rsa
