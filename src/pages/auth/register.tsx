@@ -48,6 +48,7 @@ const Register: React.FC = () => {
             className="max-w-full h-auto"
             src="https://i.imgur.com/I9Qjk2t.png"
             alt="Register illustration"
+            preview={false}
           />
         </div>
         <div className="hidden md:block border-l mx-2"></div>
