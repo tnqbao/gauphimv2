@@ -16,7 +16,7 @@ const MoviesCategories: React.FC<MoviesCategoriesProps> = ({ catesprop }) => {
     const formattedCategory = cate
       .toLowerCase()
       .replace(/\s+/g, "-");
-    router.push(`../${formattedCategory=="trang-chủ" ? "" : formattedCategory}`);
+    router.push(`../${(formattedCategory==="trang-chủ" || formattedCategory==="home") ? "" : formattedCategory}?page=1`);
     setIsMenuOpen(false);
   };
 
@@ -35,7 +35,7 @@ const MoviesCategories: React.FC<MoviesCategoriesProps> = ({ catesprop }) => {
   );
 
   const mainMenu = (
-    <div className="flex flex-wrap gap-2 p-2 m-1 bg-white shadow-md rounded-md">
+    <div className="flex flex-wrap gap-2 p-2 m-1 bg-slate-700 shadow-md rounded-md">
       {categoriesList.map((cate, index) => {
         if (cate === "Thể Loại") {
           return (

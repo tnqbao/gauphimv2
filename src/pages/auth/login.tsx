@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "react-i18next";
-import { Button, Checkbox, Form, Input, Image, Flex} from "antd";
+import { Button, Checkbox, Form, Input, Image } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { userApiInstance } from "@/utils/axiosConfig"; 
-
-
+import { userApiInstance } from "@/utils/axiosConfig";
+import { useAuth } from "@/contexts/AuthContext";
 type FieldType = {
   username?: string;
   password?: string;
@@ -18,20 +17,27 @@ const Login: React.FC = () => {
   const [form] = Form.useForm();
   const router = useRouter();
   const { t } = useTranslation("login");
+  const { login } = useAuth();
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+    if (username) {
+      router.push("../");
+    }
+  }, [router]);
+
   const onFinish = async (values: FieldType) => {
     const typeWithStringField = {
       ...values,
       keepMeLogin: values.keepMeLogin?.toString() ?? "false",
     };
-    const username = localStorage.getItem('username');
-    if (username) router.push("../");
+  
     try {
       const response = await userApiInstance.post(
         "/api/auth/login",
         typeWithStringField
       );
       if (response.status === 200) {
-        localStorage.setItem("username", response.data.username)
+        login(values.username ?? "", typeWithStringField.keepMeLogin);
         router.push("../");
       }
     } catch {
@@ -82,7 +88,8 @@ const Login: React.FC = () => {
                 placeholder={t("password")}
               />
             </Form.Item>
-            <Flex justify="space-between" align="center">
+
+            <div className="flex justify-between items-center">
               <Form.Item
                 name="keepMeLogin"
                 valuePropName="checked"
@@ -93,7 +100,7 @@ const Login: React.FC = () => {
               <Form.Item>
                 <a href="#">{t("forgotPassword")}</a>
               </Form.Item>
-            </Flex>
+            </div>
 
             <Form.Item className="text-center">
               <Button type="primary" size="large" htmlType="submit">

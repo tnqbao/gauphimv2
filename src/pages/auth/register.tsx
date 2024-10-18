@@ -30,7 +30,6 @@ const Register: React.FC = () => {
     };
     try {
       const response = await userApiInstance.post("/api/auth/register", formattedValues);
-      alert(response.data.date_of_birth)
       if (response.status==200) {
         router.push("../auth/login");
       }

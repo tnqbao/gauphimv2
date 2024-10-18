@@ -29,12 +29,12 @@ const MovieCarousel: FC<MovieCarouselProps> = ({ items, cdnImageDomain }) => {
   };
 
   const handleClick = (slug: string) => {
-    router.push(`/film/${slug}`);
+    router.push(`/detail/${slug}`);
   };
 
   return (
     <div
-      className="relative mx-5 md:mx-20 my-5 rounded-lg "
+      className="relative mx-5 md:mx-36 my-5 rounded-lg transform hover:scale-105"
       style={{
         backgroundImage: `url(${currentBackground})`,
         backgroundSize: "cover",
@@ -53,7 +53,7 @@ const MovieCarousel: FC<MovieCarouselProps> = ({ items, cdnImageDomain }) => {
         {items.map((item) => (
           <div
             key={item._id}
-            className="relative h-[400px] md:h-[600px] w-full flex items-center justify-center cursor-pointer"
+            className="relative h-[250px] sm:h-[350px] md:h-[400px] 2xl:h-[550px] w-full flex items-center justify-center cursor-pointer"
             onClick={() => handleClick(item.slug)}
           >
             <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black via-black/60 to-transparent">
