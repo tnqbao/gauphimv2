@@ -1,7 +1,7 @@
 # Stage 1: Build the application
 FROM node:18-bullseye AS builder
 WORKDIR /app
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock /app/
 RUN yarn install --frozen-lockfile
 COPY . .
 RUN yarn build
