@@ -4,8 +4,10 @@ import React, { createContext, useState, useContext, ReactNode } from "react";
 interface GlobalContextType {
   eposide: number;
   page : number;
+  currentCate: string;
   changeEposide: (eposide: number) => void;
   changePage: (page: number) => void;
+  changeCurrentCate: (currentCate: string) => void;
 }
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
@@ -14,7 +16,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const [eposide, setEposide] = useState(1);
   const [page, setPage] = useState(1);
-
+  const [currentCate, setCurrentCate] = useState("Home");
   const changeEposide = (eposide : number) => {
     setEposide(eposide)
     
@@ -31,9 +33,13 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     });
   }
 
+  const changeCurrentCate = (currentCate: string) => {
+    setCurrentCate(currentCate);
+  }
+
 
   return (
-    <GlobalContext.Provider value={{ eposide, changeEposide, page, changePage }}>
+    <GlobalContext.Provider value={{ eposide, changeEposide, page, changePage, currentCate, changeCurrentCate }}>
       {children}
     </GlobalContext.Provider>
   );

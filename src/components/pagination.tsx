@@ -38,7 +38,7 @@ const Pagination: React.FC<PaginationProps> = ({
     <>
       <div className="flex justify-center border-solid-[#dba902]">
         <button
-          className="flex-1 border-solid cursor-pointer p-3.5 m-6 rounded-md font-bold bg-gray-800 text-white relative after:absolute after:bottom-0 after:left-0 after:bg-slate-700 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300"
+          className="flex-1 border-solid cursor-pointer m-6 rounded-md bg-gray-800 text-white relative after:absolute after:bottom-0 after:left-0 after:bg-slate-700 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300"
           onClick={() => changePage(Math.max(1, page - 1))}
           disabled={page === 1}
         >
@@ -54,7 +54,7 @@ const Pagination: React.FC<PaginationProps> = ({
               }
             }}
             className={
-              "flex-1 border-solid cursor-pointer p-3.5 m-6 rounded-md font-bold relative after:absolute after:bottom-0 after:left-0 after:bg-slate-700 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300 " +
+              "flex-1 border-solid cursor-pointer p-3.5 m-6 rounded-md relative after:absolute after:bottom-0 after:left-0 after:bg-slate-700 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300 " +
               (pageNumber === page
                 ? "bg-[#dba902] text-black"
                 : "bg-gray-800 text-white hidden md:block")
@@ -64,7 +64,7 @@ const Pagination: React.FC<PaginationProps> = ({
           </button>
         ))}
         <button
-          className="flex-1 border-solid cursor-pointer p-3.5 m-6 rounded-md font-bold bg-gray-800 text-white relative after:absolute after:bottom-0 after:left-0 after:bg-slate-700 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300"
+          className="flex-1 border-solid cursor-pointer p-3.5 m-6 rounded-md bg-gray-800 text-white relative after:absolute after:bottom-0 after:left-0 after:bg-slate-700 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300"
           onClick={() => changePage(Math.min(totalPages, page + 1))}
           disabled={page >= totalPages}
         >

@@ -4,6 +4,6 @@
   "register": "Register", 
   "username": "Username",
   "password": "Password",
-  "categories" : "Home/Series/Movies/Animation/Shows/Coming soon",
+  "categories" : "Home/Series/Movies/Animation",
   "watch" : "Watch now"
 }

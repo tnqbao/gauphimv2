@@ -1,16 +1,19 @@
+const slugMap: { [key: string]: string } = {
+  "country" : "quoc-gia",
+  "quoc-gia" : "quoc-gia",
+  "the-loai" : "the-loai",
+  "categories" : "the-loai",
+  "trang-chu": "phim-moi",
+  "home": "phim-moi",
+  "phim-bo": "phim-bo",
+  "series": "phim-bo",
+  "phim-le": "phim-le",
+  "movies": "phim-le",
+  "hoat-hinh": "hoat-hinh",
+  "animation": "hoat-hinh",
+};
+
 export const handleSlug = (str: string) => {
-    str = str.toLowerCase().normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-    switch (str) {
-      case "trang-chu"      : case "home"       : str = "phim-moi"        ; break;
-      case "phim-bo"        : case "series"     : str = "phim-bo"         ; break;
-      case "phim-le"        : case "movies"     : str = "phim-le"         ; break; 
-      case "hoat-hinh"      : case "animation"  : str = "hoat-hinh"       ; break;
-      case "ct-truyen-hinh" : case "shows"      : str = "tv-shows"        ; break;
-      case "sap-chieu"      : case "coming-soon": str = "phim-sap-chieu"  ; break;
-      case "vietsub"        :                     str = "phim-vietsub"    ; break;
-      case "thuyet-minh"    :                     str = "phim-thuyet-minh"; break;   
-      default:                                                              break;   
-    }
-    return str
-  };
+  str = str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  return slugMap[str] || str;
+};
