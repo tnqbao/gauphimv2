@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { Menu, Dropdown } from "antd";
 import { MenuOutlined, DownOutlined } from "@ant-design/icons";
+import { useGlobal } from "@/contexts/GlobalContext";
+import { handleSlug } from "@/utils/helper";
 
 interface MoviesCategoriesProps {
   catesprop: string;
@@ -11,69 +13,66 @@ const MoviesCategories: React.FC<MoviesCategoriesProps> = ({ catesprop }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const categoriesList = catesprop.split("/");
   const router = useRouter();
+  const { currentCate, changeCurrentCate } = useGlobal();
 
-  const handleClick = (cate: string) => {
-    const formattedCategory = cate
-      .toLowerCase()
-      .replace(/\s+/g, "-");
-    router.push(`../${(formattedCategory==="trang-chủ" || formattedCategory==="home") ? "" : formattedCategory}?page=1`);
-    setIsMenuOpen(false);
+  const handleClick = (cate: string, parent: string) => {
+    let formattedCategory = handleSlug(cate);
+      formattedCategory = formattedCategory.toLowerCase().replace(/\s+/g, "-");
+      changeCurrentCate(cate);
+        if (parent !== "") {
+      formattedCategory = `${parent}/${formattedCategory}`;
+    }
+    router.push(`../${(formattedCategory === "trang-chu" || formattedCategory === "home") ? "" : formattedCategory}?page=1`);
+        setIsMenuOpen(false);
   };
+  
 
   const genreMenu = (
     <Menu>
-      <Menu.Item onClick={() => handleClick("action")}>Action</Menu.Item>
-      <Menu.Item onClick={() => handleClick("comedy")}>Comedy</Menu.Item>
+      <Menu.Item onClick={() => handleClick("hanh-dong", "the-loai")}>Hành Động</Menu.Item>
+      <Menu.Item onClick={() => handleClick("Hài", "the-loai")}>Hài</Menu.Item>
     </Menu>
   );
 
   const countryMenu = (
     <Menu>
-      <Menu.Item onClick={() => handleClick("usa")}>USA</Menu.Item>
-      <Menu.Item onClick={() => handleClick("uk")}>UK</Menu.Item>
+      <Menu.Item onClick={() => handleClick("usa", "quoc-gia")}>USA</Menu.Item>
+      <Menu.Item onClick={() => handleClick("uk", "quoc-gia")}>UK</Menu.Item>
     </Menu>
   );
 
+  const renderCategoryButton = (cate: string, index: number) => {
+    const isDropdown = cate === "Thể Loại" || cate === "Quốc Gia";
+    const isActive = cate === currentCate;
+
+    return isDropdown ? (
+      <Dropdown key={index} overlay={cate === "Thể Loại" ? genreMenu : countryMenu} trigger={['hover']}>
+        <button className={`relative px-4 py-2 text-white hover:text-[#f5d418] rounded flex justify-between items-center group text-lg font-semibold`}>
+          {cate} <DownOutlined />
+          <span className="absolute bottom-0 left-0 bg-slate-700 h-0.5 w-0 group-hover:w-full transition-all duration-300"></span>
+        </button>
+      </Dropdown>
+    ) : (
+      <button
+        key={index}
+        className={`relative px-4 py-2 hover:text-[#ffd255] rounded flex justify-between text-lg font-semibold items-center group ${isActive ? 'text-[#f5d418]' : 'text-white'}`}
+        onClick={() => handleClick(cate, "")}
+      >
+        {cate}
+        <span className={`absolute bottom-0 left-0 bg-slate-700 h-0.5 w-0 group-hover:w-full transition-all duration-300 ${isActive ? 'w-full' : ''}`}></span>
+      </button>
+    );
+  };
+
   const mainMenu = (
-    <div className="flex flex-wrap gap-2 p-2 m-1 bg-slate-700 shadow-md rounded-md">
-      {categoriesList.map((cate, index) => {
-        if (cate === "Thể Loại") {
-          return (
-            <Dropdown key={index} overlay={genreMenu} trigger={['click']}>
-              <button className="relative text-left px-4 py-2 text-white hover:text-[#2c3f3b] w-full flex justify-between items-center group">
-                {cate} <DownOutlined />
-                <span className="absolute bottom-0 left-0 bg-slate-700 h-0.5 w-0 group-hover:w-full transition-all duration-300"></span>
-              </button>
-            </Dropdown>
-          );
-        } else if (cate === "Quốc Gia") {
-          return (
-            <Dropdown key={index} overlay={countryMenu} trigger={['click']}>
-              <button className="relative text-left px-4 py-2 text-white hover:text-[#2c3f3b] w-full flex justify-between items-center group">
-                {cate} <DownOutlined />
-                <span className="absolute bottom-0 left-0 bg-slate-700 h-0.5 w-0 group-hover:w-full transition-all duration-300"></span>
-              </button>
-            </Dropdown>
-          );
-        } else {
-          return (
-            <button
-              key={index}
-              className="relative px-4 py-2 text-white hover:text-[#f5d418] w-full flex justify-between items-center group"
-              onClick={() => handleClick(cate)}
-            >
-              {cate}
-              <span className="absolute bottom-0 left-0 bg-slate-700 h-0.5 w-0 group-hover:w-full transition-all duration-300"></span>
-            </button>
-          );
-        }
-      })}
+    <div className="flex flex-wrap gap-2 p-2 m-1 bg-slate-700 shadow-md rounded-md ">
+      {categoriesList.map(renderCategoryButton)}
     </div>
   );
 
   return (
     <>
-      <div className="sm:hidden">
+      <div className="md:hidden">
         <Dropdown
           overlay={mainMenu}
           trigger={['click']}
@@ -87,38 +86,7 @@ const MoviesCategories: React.FC<MoviesCategoriesProps> = ({ catesprop }) => {
         </Dropdown>
       </div>
       <nav className="hidden md:flex justify-evenly items-center p-4 flex-wrap gap-2">
-        {categoriesList.map((cate, index) => {
-          if (cate === "Thể Loại") {
-            return (
-              <Dropdown key={index} overlay={genreMenu} trigger={['hover']}>
-                <button className="relative px-4 py-2 text-white hover:text-[#f5d418] rounded flex justify-between items-center group">
-                  {cate} <DownOutlined />
-                  <span className="absolute bottom-0 left-0 bg-slate-700 h-0.5 w-0 group-hover:w-full transition-all duration-300"></span>
-                </button>
-              </Dropdown>
-            );
-          } else if (cate === "Quốc Gia") {
-            return (
-              <Dropdown key={index} overlay={countryMenu} trigger={['hover']}>
-                <button className="relative px-4 py-2 text-white hover:text-[#f5d418] rounded flex justify-between items-center group">
-                  {cate} <DownOutlined />
-                  <span className="absolute bottom-0 left-0 bg-slate-700 h-0.5 w-0 group-hover:w-full transition-all duration-300"></span>
-                </button>
-              </Dropdown>
-            );
-          } else {
-            return (
-              <button
-                key={index}
-                className="relative px-4 py-2 text-white hover:text-[#ffd255] rounded flex justify-between items-center group"
-                onClick={() => handleClick(cate)}
-              >
-                {cate}
-                <span className="absolute bottom-0 left-0 bg-slate-700 h-0.5 w-0 group-hover:w-full transition-all duration-300"></span>
-              </button>
-            );
-          }
-        })}
+        {categoriesList.map(renderCategoryButton)}
       </nav>
     </>
   );

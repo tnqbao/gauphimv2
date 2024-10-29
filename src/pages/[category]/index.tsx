@@ -5,14 +5,20 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { movieApiInstance } from "@/utils/axiosConfig";
 import { PageProps } from "@/utils/types";
 import { handleSlug } from "@/utils/helper";
+import Pagination from "@/components/pagination";
 
-
-const Category: React.FC<PageProps> = ({ items, cdnImageDomain, totalItems, totalItemsPerPage ,error }) => {
-
+const Category: React.FC<PageProps> = ({ items, cdnImageDomain, totalItems, totalItemsPerPage, error }) => {
   return (
-    <>
-      <Filmlist items={items} cdnImageDomain={cdnImageDomain} totalItems={totalItems} totalItemsPerPage={totalItemsPerPage} error={error} />
-    </>
+    <div className="p-10">
+      {error && <p className="text-red-500">{error}</p>}
+      <div className="pb-10">
+        <Pagination totalItems={totalItems} totalItemsPerPage={totalItemsPerPage} />
+      </div>
+      <Filmlist items={items} cdnImageDomain={cdnImageDomain} error={error} />
+      <div className="pt-10">
+        <Pagination totalItems={totalItems} totalItemsPerPage={totalItemsPerPage} />
+      </div>
+    </div>
   );
 };
 
@@ -29,8 +35,8 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, query }) 
         ...(await serverSideTranslations(currentLocale, ["common"])),
         items: data.items,
         cdnImageDomain: data.APP_DOMAIN_CDN_IMAGE,
-        totalItems : data.params.pagination.totalItems,
-        totalItemsPerPage: data.params.pagination.totalItemsPerPage
+        totalItems: data.params.pagination.totalItems,
+        totalItemsPerPage: data.params.pagination.totalItemsPerPage,
       },
     };
   } catch (error) {
@@ -41,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, query }) 
         ...(await serverSideTranslations(currentLocale, ["common"])),
         items: [],
         cdnImageDomain: "",
-        totalItems : 0,
+        totalItems: 0,
         totalItemsPerPage: 0,
         error: "Error fetching data",
       },

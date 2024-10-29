@@ -1,9 +1,8 @@
 import React from "react";
 import FilmCard from "./filmCard";
-import { PageProps } from "@/utils/types";
+import { FilmListProps } from "@/utils/types";
 import useWindowSize from "@/contexts/WindowSizeContext";
-import Pagination from "@/components/pagination"
-const Filmlist: React.FC<PageProps> = ({ items, cdnImageDomain, totalItems, totalItemsPerPage ,error }) => {
+const Filmlist: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => {
   const windowSize = useWindowSize();
 
   const getColumnCount = () => {
@@ -18,7 +17,7 @@ const Filmlist: React.FC<PageProps> = ({ items, cdnImageDomain, totalItems, tota
 
   return (
     <>
-      <Pagination totalItems={totalItems} totalItemsPerPage={totalItemsPerPage} />
+   
       <div className="flex flex-wrap justify-start mx-5 md:mx-32">
         {items.length > 0 ? (
           items.map((film, index) => (
@@ -37,9 +36,8 @@ const Filmlist: React.FC<PageProps> = ({ items, cdnImageDomain, totalItems, tota
           <p>No films found for this category.</p>
         )}
       </div>
-      <Pagination totalItems={totalItems} totalItemsPerPage={totalItemsPerPage} />
+     
     </>
   );
 };
-
 export default Filmlist;

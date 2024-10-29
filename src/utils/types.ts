@@ -41,4 +41,23 @@ export interface Item {
   slug: string;
 }
 
+export interface FilmListProps {
+  items: Item[];
+  cdnImageDomain: string; 
+  error?: string;
+}
 
+export const country: { [key: string]: string } = {
+  "country" : "quoc-gia",
+  "quoc-gia" : "quoc-gia",
+  "vietnam" : "vietnam",
+  "viet-nam" : "vietnam",
+  "": "phim-moi",
+  "home": "phim-moi",
+  "phim-bo": "phim-bo",
+  "series": "phim-bo",
+  "phim-le": "phim-le",
+  "movies": "phim-le",
+  "hoat-hinh": "hoat-hinh",
+  "animation": "hoat-hinh",
+};

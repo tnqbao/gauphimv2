@@ -4,7 +4,7 @@ import { PageProps } from "@/utils/types";
 import { movieApiInstance } from "@/utils/axiosConfig";
 import nextI18NextConfig from "../../next-i18next.config.js";
 import Head from "next/head";
-import MovieCarousel from "@/components/contents/movieCarousel";
+import MovieCarousel from "@/components/contents/filmCarousel";
 import Filmlist from "@/components/contents/filmList";
 
 
@@ -15,7 +15,8 @@ const HomePage = ({
   totalItemsPerPage,
   error,
 }: PageProps) => {
- 
+  console.log(totalItems);
+  console.log(totalItemsPerPage);
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -23,28 +24,23 @@ const HomePage = ({
   return (
     <div>
       <Head>
-        <title>{  "Default Title"}</title>
+        <title>{  "Gấu Phim"}</title>
         <meta
           name="description"
-          content={ "Default Description"}
+          content={ "Website xem phim miễn phí, chất lượng cao"}
         />
         <meta property="og:type" content={"website"} />
-        <meta
-          property="og:image"
-          content={"/default-image.jpg"}
-        />
       </Head>
       <MovieCarousel items={items} cdnImageDomain={cdnImageDomain} />
-      <Filmlist items={items} totalItems={totalItems} totalItemsPerPage={totalItemsPerPage} cdnImageDomain={cdnImageDomain} error={error} />
+      <Filmlist items={items} cdnImageDomain={cdnImageDomain} error={error} />
     </div>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ locale, query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const currentLocale = locale || "en";
-  const page = query.page ? Number(query.page) : 1;
   try {
-    const response = await movieApiInstance.get(`/v1/api/home/?page=${page}`);
+    const response = await movieApiInstance.get(`/v1/api/home`);
     const data = response.data.data;
 
     return {
