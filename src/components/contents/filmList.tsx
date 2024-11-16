@@ -40,5 +40,4 @@ const Filmlist: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => 
     </>
   );
 };
-
 export default Filmlist;
