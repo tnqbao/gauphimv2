@@ -6,4 +6,3 @@ build
 .gitignore
 !package.json
 !yarn.lock
-!start.sh
