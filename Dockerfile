@@ -1,18 +1,31 @@
-# Stage 1: Build the application
-FROM node:18-bullseye AS builder
-WORKDIR /app
-COPY package.json yarn.lock /app/
-RUN yarn install --frozen-lockfile
+#step1: build
+FROM node:18-slim AS builder
+WORKDIR /home/node/blog_frontend
+COPY package*.json ./
+COPY tsconfig.json ./
+COPY yarn.lock ./
+COPY next-i18next.config.js ./
 COPY . .
+COPY .env.production .env
+RUN npm install --force --global yarn
+RUN npm install --force --global ts-node
+RUN npm install --force --global typescript
+RUN yarn install --check-files
 RUN yarn build
 
-# Stage 2: Serve the application
-FROM node:18-alpine AS production
-WORKDIR /app
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/yarn.lock ./
+#step2: production
+FROM node:18-slim AS production
+WORKDIR /home/node/blog_frontend
+COPY --from=builder /home/node/blog_frontend/.next ./.next
+COPY --from=builder /home/node/blog_frontend/public ./public
+COPY --from=builder /home/node/blog_frontend/package.json ./
+COPY --from=builder /home/node/blog_frontend/yarn.lock ./
+COPY --from=builder /home/node/blog_frontend/next-i18next.config.js ./
+COPY --from=builder /home/node/blog_frontend/next.config.mjs ./
+COPY --from=builder /home/node/blog_frontend/tsconfig.json ./
+COPY --from=builder /home/node/blog_frontend/package.json ./
+COPY --from=builder /home/node/blog_frontend/i18n.ts ./
+
 RUN yarn install --production --frozen-lockfile
 COPY .env.production .env
 EXPOSE 3000
