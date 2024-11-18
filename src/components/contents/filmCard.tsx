@@ -38,6 +38,7 @@ const FilmCard: React.FC<FilmCardProps> = ({ film }) => {
             objectPosition: "center",
           }}
           preview={false}
+          loading={"lazy"}
         />
 
         {film.quality && (

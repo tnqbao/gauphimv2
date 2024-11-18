@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.21.1",
+    "@reduxjs/toolkit": "^2.3.0",
     "antd": "^5.21.0",
+    "artplayer": "^5.2.1",
     "axios": "^1.7.7",
     "gauphimv2": "file:",
     "i18next": "^23.15.1",
@@ -21,7 +23,8 @@
     "react": "^18",
     "react-cookie": "^7.2.0",
     "react-dom": "^18",
-    "react-i18next": "^15.0.2"
+    "react-i18next": "^15.0.2",
+    "react-redux": "^9.1.2"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
