@@ -27,6 +27,6 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
         run: |
-          ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /home/debian/gau/gauphimv2 && sudo chmod+x start.sh && ./start.sh"
+          ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /home/debian/gau && sudo chmod+x gauphim.sh && ./gauphim.sh"
       - name: Remove SSH key
         run: rm ~/.ssh/id_rsa

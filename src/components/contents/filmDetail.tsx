@@ -13,8 +13,8 @@ const FilmDetail : React.FC<Film> = ({ origin_name, name, content, actor, direct
             <p> {episode_total}</p>
             <p> {episode_current}</p>
             <p> {quality}</p>
-            <img src={poster_url} alt={name} />
-            <img src={thumb_url} alt={name} />
+            {/*<img src={poster_url} alt={name} />*/}
+            {/*<img src={thumb_url} alt={name} />*/}
         </div>
     );
 }
