@@ -8,7 +8,7 @@ export interface PageProps {
 }
 
 export interface FilmCardProps {
-  film: Film;
+  film: Films;
   cdnImageDomain: string;
 }
 
@@ -25,13 +25,24 @@ export interface SeoOnPage {
 }
 
 
-export interface Film {
-  name: string;
-  slug: string;
-  thumb_url: string;
-  quality?: string;
-  episode_current?: string;
-}
+export const country: { [key: string]: string } = {
+  "country" : "quoc-gia",
+  "quoc-gia" : "quoc-gia",
+  "vietnam" : "vietnam",
+  "viet-nam" : "vietnam",
+  "": "phim-moi",
+  "home": "phim-moi",
+  "phim-bo": "phim-bo",
+  "series": "phim-bo",
+  "phim-le": "phim-le",
+  "movies": "phim-le",
+  "hoat-hinh": "hoat-hinh",
+  "animation": "hoat-hinh",
+};
+
+
+
+// Film List
 
 export interface Item {
   _id: string;
@@ -47,17 +58,35 @@ export interface FilmListProps {
   error?: string;
 }
 
-export const country: { [key: string]: string } = {
-  "country" : "quoc-gia",
-  "quoc-gia" : "quoc-gia",
-  "vietnam" : "vietnam",
-  "viet-nam" : "vietnam",
-  "": "phim-moi",
-  "home": "phim-moi",
-  "phim-bo": "phim-bo",
-  "series": "phim-bo",
-  "phim-le": "phim-le",
-  "movies": "phim-le",
-  "hoat-hinh": "hoat-hinh",
-  "animation": "hoat-hinh",
-};
+export interface Films {
+  name: string;
+  slug: string;
+  thumb_url: string;
+  quality?: string;
+  episode_current?: string;
+}
+
+
+export interface Film {
+  origin_name: string;
+  name: string;
+  content: string;
+  thumb_url: string;
+  poster_url: string;
+  quality: string;
+  episode_current: string;
+  episode_total: string;
+  actor: string;
+  director: string;
+  episodes: string[];
+}
+
+// Video Player
+
+export interface VideoPlayerProps {
+  link_m3u8: string;
+  poster_url: string;
+}
+
+
+

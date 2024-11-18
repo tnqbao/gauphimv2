@@ -8,6 +8,8 @@ import FooterComp from "@/components/footer";
 import "@/styles/globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { GlobalProvider } from "@/contexts/GlobalContext";
+import { Provider } from 'react-redux';
+import store from "@/utils/redux/store";
 
 const { Content } = Layout;
 
@@ -15,21 +17,23 @@ function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const browserLanguage = navigator.language || "en";
     if (i18n.language !== browserLanguage) {
-      i18n.changeLanguage(browserLanguage);
+       i18n.changeLanguage(browserLanguage);
     }
   }, []);
   return (
-    <AuthProvider>
-      <GlobalProvider> 
-      <Layout className="bg-black/90">
-        <HeaderComp />
-        <Content>
-          <Component {...pageProps} />
-        </Content>
-        <FooterComp />
-      </Layout>
-      </GlobalProvider>
-    </AuthProvider>
+    < Provider store={store} >
+        <AuthProvider>
+            <GlobalProvider>
+                <Layout className="bg-black/90">
+                    <HeaderComp />
+                    <Content>
+                        <Component {...pageProps} />
+                    </Content>
+                    <FooterComp />
+                </Layout>
+            </GlobalProvider>
+        </AuthProvider>
+    </Provider>
   );
 }
 

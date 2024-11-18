@@ -5,7 +5,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "react-i18next";
 import { Button, Checkbox, Form, Input, Image } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { userApiInstance } from "@/utils/axiosConfig";
+import { userApiInstance } from "@/utils/axios.config";
 import { useAuth } from "@/contexts/AuthContext";
 type FieldType = {
   username?: string;

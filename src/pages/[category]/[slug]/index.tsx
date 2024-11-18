@@ -2,7 +2,7 @@ import React from "react";
 import Filmlist from "@/components/contents/filmList";
 import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { movieApiInstance } from "@/utils/axiosConfig";
+import { movieApiInstance } from "@/utils/axios.config";
 import { PageProps } from "@/utils/types";
 import { handleSlug } from "@/utils/helper";
 import Pagination from "@/components/pagination";

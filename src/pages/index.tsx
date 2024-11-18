@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { PageProps } from "@/utils/types";
-import { movieApiInstance } from "@/utils/axiosConfig";
+import { movieApiInstance } from "@/utils/axios.config";
 import nextI18NextConfig from "../../next-i18next.config.js";
 import Head from "next/head";
 import MovieCarousel from "@/components/contents/filmCarousel";
