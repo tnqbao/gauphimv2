@@ -1,13 +1,20 @@
-import { useGlobal } from "@/contexts/GlobalContext";
 import { PaginationProps } from "@/utils/types";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/utils/redux/store";
+import {changePage} from "@/utils/redux/store/slices/navigate";
+import {useRouter} from "next/router";
+
+
 
 const Pagination: React.FC<PaginationProps> = ({
   totalItems,
   totalItemsPerPage,
 }) => {
   const totalPages = Math.ceil(totalItems / totalItemsPerPage) || 1;
-  const { changePage, page } = useGlobal();
-
+  // const { changePage, page } = useGlobal();
+  const { page } = useSelector((state: RootState) => state.navigate);
+  const dispatch = useDispatch();
+  const router = useRouter();
   const getPageNumbers = () => {
     const pages = [];
     const maxPageNumbers = 5; 
@@ -34,12 +41,25 @@ const Pagination: React.FC<PaginationProps> = ({
     return pages;
   };
 
+  const handlePageChange = (page: number) => {
+    dispatch(changePage(page));
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        page: page.toString(),
+      },
+    });
+  };
+
+
+
   return (
     <>
       <div className="flex justify-center border-solid-[#dba902]">
         <button
           className="flex-1 border-solid cursor-pointer m-6 rounded-md bg-gray-800 text-white relative after:absolute after:bottom-0 after:left-0 after:bg-slate-700 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300"
-          onClick={() => changePage(Math.max(1, page - 1))}
+          onClick={() => {handlePageChange(Math.max(1, page - 1))}}
           disabled={page === 1}
         >
           Trang Trước
@@ -50,7 +70,7 @@ const Pagination: React.FC<PaginationProps> = ({
             disabled={pageNumber === "..."}
             onClick={() => {
               if (pageNumber !== "...") {
-                changePage(pageNumber as number); 
+                handlePageChange(pageNumber as number);
               }
             }}
             className={
@@ -65,7 +85,7 @@ const Pagination: React.FC<PaginationProps> = ({
         ))}
         <button
           className="flex-1 border-solid cursor-pointer p-3.5 m-6 rounded-md bg-gray-800 text-white relative after:absolute after:bottom-0 after:left-0 after:bg-slate-700 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300"
-          onClick={() => changePage(Math.min(totalPages, page + 1))}
+          onClick={() => {handlePageChange(Math.min(totalPages, page + 1))}}
           disabled={page >= totalPages}
         >
           Trang Sau

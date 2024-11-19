@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { Menu, Dropdown } from "antd";
 import { MenuOutlined, DownOutlined } from "@ant-design/icons";
-import { useGlobal } from "@/contexts/GlobalContext";
 import { handleSlug } from "@/utils/helper";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/utils/redux/store";
+import {changeCate} from "@/utils/redux/store/slices/navigate";
 
 interface MoviesCategoriesProps {
   catesprop: string;
@@ -13,12 +15,13 @@ const MoviesCategories: React.FC<MoviesCategoriesProps> = ({ catesprop }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const categoriesList = catesprop.split("/");
   const router = useRouter();
-  const { currentCate, changeCurrentCate } = useGlobal();
-
+  // const { currentCate, changeCurrentCate } = useGlobal();
+  const { category } = useSelector((state: RootState) => state.navigate);
+  const dispatch  = useDispatch();
   const handleClick = (cate: string, parent: string) => {
     let formattedCategory = handleSlug(cate);
       formattedCategory = formattedCategory.toLowerCase().replace(/\s+/g, "-");
-      changeCurrentCate(cate);
+      dispatch(changeCate(cate))
         if (parent !== "") {
       formattedCategory = `${parent}/${formattedCategory}`;
     }
@@ -43,7 +46,7 @@ const MoviesCategories: React.FC<MoviesCategoriesProps> = ({ catesprop }) => {
 
   const renderCategoryButton = (cate: string, index: number) => {
     const isDropdown = cate === "Thể Loại" || cate === "Quốc Gia";
-    const isActive = cate === currentCate;
+    const isActive = cate === category;
 
     return isDropdown ? (
       <Dropdown key={index} overlay={cate === "Thể Loại" ? genreMenu : countryMenu} trigger={['hover']}>

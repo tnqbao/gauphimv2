@@ -6,8 +6,6 @@ import i18n from "../../i18n";
 import HeaderComp from "@/components/header";
 import FooterComp from "@/components/footer";
 import "@/styles/globals.css";
-import { AuthProvider } from "@/contexts/AuthContext";
-import { GlobalProvider } from "@/contexts/GlobalContext";
 import { Provider } from 'react-redux';
 import store from "@/utils/redux/store";
 
@@ -22,8 +20,6 @@ function App({ Component, pageProps }: AppProps) {
   }, []);
   return (
     < Provider store={store} >
-        <AuthProvider>
-            <GlobalProvider>
                 <Layout className="bg-black/90">
                     <HeaderComp />
                     <Content>
@@ -31,8 +27,6 @@ function App({ Component, pageProps }: AppProps) {
                     </Content>
                     <FooterComp />
                 </Layout>
-            </GlobalProvider>
-        </AuthProvider>
     </Provider>
   );
 }
