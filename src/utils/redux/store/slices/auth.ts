@@ -12,7 +12,7 @@ const initialState: AuthState = {
     keepMeLogin : ''
 };
 
-const playerSlice = createSlice({
+const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
@@ -22,8 +22,11 @@ const playerSlice = createSlice({
         addFullName: (state, action: PayloadAction<string>) => {
             state.fullname = action.payload;
         },
+        checkAuth: (state , action: PayloadAction<boolean>) => {
+            state.isAuthenticated = action.payload;
+        },
     },
 });
 
-export const { keepLogin, addFullName } = playerSlice.actions;
-export default playerSlice.reducer;
+export const { keepLogin, addFullName, checkAuth } = authSlice.actions;
+export default authSlice.reducer;

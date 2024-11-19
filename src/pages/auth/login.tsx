@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -6,9 +5,9 @@ import { useTranslation } from "react-i18next";
 import { Button, Checkbox, Form, Input, Image } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { userApiInstance } from "@/utils/axios.config";
-import { useAuth } from "@/contexts/AuthContext";
-import {useDispatch} from "react-redux";
-import {addFullName, keepLogin} from "@/utils/redux/store/slices/auth";
+import {useDispatch, useSelector} from "react-redux";
+import {addFullName, checkAuth, keepLogin} from "@/utils/redux/store/slices/auth";
+import {RootState} from "@/utils/redux/store";
 
 
 type FieldType = {
@@ -21,14 +20,12 @@ const Login: React.FC = () => {
   const [form] = Form.useForm();
   const router = useRouter();
   const { t } = useTranslation("login");
-  const { login } = useAuth();
   const dispacth = useDispatch();
-  useEffect(() => {
-    const username = localStorage.getItem("fullname");
-    if (username) {
-      router.push("../");
-    }
-  }, [router]);
+
+  const fullname = useSelector((state: RootState) => state.auth.fullname);
+  if (fullname) {
+    router.push("../");
+  }
 
   const onFinish = async (values: FieldType) => {
     const typeWithStringField = {
@@ -43,9 +40,10 @@ const Login: React.FC = () => {
       );
 
       if (response.status === 200) {
-        dispacth(addFullName(response.data.fullname));
+        dispacth(addFullName(response.data.user.fullname));
         dispacth(keepLogin(typeWithStringField.keepMeLogin));
-        login(values.username ?? "", typeWithStringField.keepMeLogin);
+        dispacth(checkAuth(true));
+        // login(values.username ?? "", typeWithStringField.keepMeLogin);
         router.push("../");
       }
     } catch {
