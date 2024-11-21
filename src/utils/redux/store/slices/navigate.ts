@@ -30,6 +30,7 @@ const navigateSlice = createSlice({
         },
         changeCate: (state , action: PayloadAction<string>) => {
             state.category = action.payload;
+            state.page = 1;
         },
     },
 });
