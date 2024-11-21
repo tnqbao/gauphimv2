@@ -1,5 +1,5 @@
 import React from "react";
-import Filmlist from "@/components/contents/filmList";
+import FilmList from "@/components/contents/film-list";
 import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { movieApiInstance } from "@/utils/axios.config";
@@ -14,7 +14,7 @@ const Category: React.FC<PageProps> = ({ items, cdnImageDomain, totalItems, tota
       <div className="pb-10">
         <Pagination totalItems={totalItems} totalItemsPerPage={totalItemsPerPage} />
       </div>
-      <Filmlist items={items} cdnImageDomain={cdnImageDomain} error={error} />
+      <FilmList items={items} cdnImageDomain={cdnImageDomain} error={error} />
       <div className="pt-10">
         <Pagination totalItems={totalItems} totalItemsPerPage={totalItemsPerPage} />
       </div>
