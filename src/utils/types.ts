@@ -74,14 +74,16 @@ export interface Film {
   thumb_url: string;
   poster_url: string;
   trailer_url: string;
+  update_time : string;
   quality: string;
   episode_current: string;
   episode_total: string;
-  actor: string;
+  actor: string[];
   director: string;
-  episodes: string[];
+  episodes: {name : string , link_m3u8 : string}[];
+  category: {id : string ,name : string, slug : string }[];
   breadcrumbs: { name: string; slug: string, position : number }[];
-  country : string;
+  country : string[];
   slug: string;
 }
 

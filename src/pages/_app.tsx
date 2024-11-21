@@ -7,7 +7,8 @@ import HeaderComp from "@/components/header";
 import FooterComp from "@/components/footer";
 import "@/styles/globals.css";
 import { Provider } from 'react-redux';
-import store from "@/utils/redux/store";
+import { store, persistor} from "@/utils/redux/store";
+import {PersistGate} from "redux-persist/integration/react";
 
 const { Content } = Layout;
 
@@ -20,6 +21,7 @@ function App({ Component, pageProps }: AppProps) {
   }, []);
   return (
     < Provider store={store} >
+        <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
                 <Layout className="bg-black/90">
                     <HeaderComp />
                     <Content>
@@ -27,6 +29,7 @@ function App({ Component, pageProps }: AppProps) {
                     </Content>
                     <FooterComp />
                 </Layout>
+        </PersistGate>
     </Provider>
   );
 }

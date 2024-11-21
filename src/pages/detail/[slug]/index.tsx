@@ -3,15 +3,17 @@ import { GetServerSideProps } from "next";
 import { handleSlug } from "@/utils/helper";
 import { movieApiInstance } from "@/utils/axios.config";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import FilmDetail from "@/components/contents/filmDetail";
+import FilmDetail from "@/components/contents/film-detail";
 import { useDispatch } from "react-redux";
-import { addEpisode, addPosterUrl } from "@/utils/redux/store/slices/player";
+import {addEpisode, addPosterUrl, setPlayUrl} from "@/utils/redux/store/slices/player";
+import {changeEpisode} from "@/utils/redux/store/slices/navigate";
 
 const Detail: React.FC<{ filmDetails: Film }> = ({ filmDetails }) => {
     const dispatch = useDispatch();
     dispatch(addEpisode(filmDetails.episodes));
     dispatch(addPosterUrl(filmDetails.poster_url));
-
+    dispatch(setPlayUrl(filmDetails.episodes[0].link_m3u8));
+    dispatch(changeEpisode(1))
     return <FilmDetail filmDetails={filmDetails}  />;
 };
 
@@ -24,9 +26,13 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, query }) 
         const response = await movieApiInstance.get(`/v1/api/phim/${slug}`);
         const data = response.data.data;
         const episodes = Array.isArray(data.item.episodes[0]?.server_data)
-            ? data.item.episodes[0]?.server_data?.map((episode: { name: string, slug: string, filename: string, link_embed: string, link_m3u8: string }) => episode.link_m3u8)
+            ? data.item.episodes[0].server_data.map(
+                (episode: { name: string; slug: string; filename: string; link_embed: string; link_m3u8: string }) => ({
+                    name: episode.name,
+                    link_m3u8: episode.link_m3u8,
+                })
+            )
             : [];
-
         const filmDetails: Film = {
             origin_name: data.item.origin_name || "",
             name: data.item.name || "",
@@ -37,10 +43,12 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, query }) 
             quality: data.item.quality || "",
             episode_current: data.item.episode_current || "",
             episode_total: data.item.episode_total || "",
-            actor: data.item.actor || "",
+            actor: data.item.actor || [],
             director: data.item.director || "",
             episodes: episodes || [],
+            category : data.item.category || [],
             breadcrumbs: data.breadcrumbs || [],
+            update_time : data.item.modified.time || "",
             country: data.item.country[0].name || "",
             slug : data.item.slug || ""
         };
@@ -67,11 +75,13 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, query }) 
                     quality: "",
                     episode_current: "",
                     episode_total: "",
-                    actor: "",
+                    actor: [],
                     director: "",
                     episodes: [],
                     breadcrumbs: [],
+                    update_time: "",
                     country: "",
+                    category: [],
                     slug: "",
                 },
                 error: "Error fetching data",

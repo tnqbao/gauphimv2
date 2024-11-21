@@ -1,12 +1,12 @@
 import React from "react";
-import FilmCard from "./filmCard";
+import FilmCard from "./film-card";
 import { FilmListProps } from "@/utils/types";
 import useWindowSize from "@/contexts/WindowSizeContext";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/utils/redux/store";
 import {loadMoreItem} from "@/utils/redux/store/slices/navigate";
 
-const Filmlist: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => {
+const FilmList: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => {
   const windowSize = useWindowSize();
   const { visibleItem } = useSelector((state: RootState) => state.navigate);
   const dispatch = useDispatch()
@@ -58,4 +58,4 @@ const Filmlist: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => 
   );
 };
 
-export default Filmlist;
+export default FilmList;

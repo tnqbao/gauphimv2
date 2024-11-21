@@ -1,10 +1,14 @@
 import {Film} from "@/utils/types";
 import {useState} from "react";
 import {useRouter} from "next/router";
-import {Image} from "antd";
+import {Button, Divider, Image} from "antd";
+import {RootState} from "@/utils/redux/store";
+import {useSelector} from "react-redux";
+import ChapterSelector from "@/components/contents/chapter-selector";
 
 const FilmDetail: React.FC<{ filmDetails: Film }> = ({filmDetails}) => {
     const [hideContent, setHideContent] = useState(true);
+    const episodes = useSelector((state: RootState) => state.player.episodes);
     const router = useRouter();
     return (
         <div>
@@ -21,11 +25,12 @@ const FilmDetail: React.FC<{ filmDetails: Film }> = ({filmDetails}) => {
                             className={"h-full aspect-video m-auto flex-shrink-0 w-full object-cover blur-sm"}
                             alt={filmDetails.name}
                             loading={"lazy"}
+                            preview={false}
                             />
                         </div>
                         <div
                             className="absolute aspect-video md:backdrop-blur-sm h-[120%] backdrop-p z-0 top-2/3 -left-[20%] -translate-y-2/3"></div>
-                        <div className="absolute bg-background w-1/2 h-[120%] -left-3/4 -top-[10%]"></div>
+                        <div className="absolute  w-1/2 h-[120%] -left-3/4 -top-[10%]"></div>
                         <div className="left-layer w-[150%] h-[120%] -left-[30%] -top-[10%]"></div>
                     </div>
 
@@ -34,6 +39,7 @@ const FilmDetail: React.FC<{ filmDetails: Film }> = ({filmDetails}) => {
                         src={`https://img.ophim.live/uploads/movies/${filmDetails.thumb_url}`}
                         className={"w-full shadow-md"}
                         alt={filmDetails.name}
+                        preview={false}
                         />
                     </div>
                     <div className="relative w-full md:w-5/12 top-0 right-0">
@@ -89,23 +95,16 @@ const FilmDetail: React.FC<{ filmDetails: Film }> = ({filmDetails}) => {
                   </span>
                                     <span className="border-solid text-slate-100">
                         <span>
-                                {filmDetails.actor}
+                                {filmDetails.actor.length > 0 ? filmDetails.actor.map((actor, index) => ( index === filmDetails.actor.length - 1 ? actor : actor + ", ")) : "Đang cập nhật"}
                           </span>
-                        : {"Đang cập nhật"}
+
                   </span>
                                 </li>
                             </ul>
                             <div className="space-x-3 flex w-full flex-wrap mt-3 border-r-slate-50 rounded-sm ">
                                 <div className="with-title mt-8 dark:!border-white">
                                     <p className=" text-lg title !-mt-10  text-[#dba902]">
-                                        Miêu tả
-                                    </p>
-                                    <p className=" text-slate-100">
-                                        {hideContent
-                                            ? filmDetails.content.startsWith("<p>")
-                                            : filmDetails.content.startsWith("<p>")
-                                                ? filmDetails.content.split("<p>")[1].split("</p>")[0]
-                                                : filmDetails.content}
+                                        Miêu tả: &nbsp;
                                     </p>
                                     <button
                                         className="m-0 p-0 focus:outline-none text-[#a79047] drop-shadow-2xl"
@@ -113,23 +112,38 @@ const FilmDetail: React.FC<{ filmDetails: Film }> = ({filmDetails}) => {
                                     >
                                         {hideContent ? "Hiển Thị Thêm" : "Ẩn Bớt"}
                                     </button>
+                                    <p className=" text-slate-100">
+                                        {hideContent
+                                            ? filmDetails.content.startsWith("<p>")
+                                            : filmDetails.content.startsWith("<p>")
+                                                ? filmDetails.content.split("<p>")[1].split("</p>")[0]
+                                                : filmDetails.content}
+                                    </p>
+
                                 </div>
                                 <br/>
-                                <button
-                                    className="bg-[#dba902] px-20 py-3 rounded-lg w-full font-bold my-2 hover:bg-[#186e5c] relative after:absolute after:bottom-0 after:left-0 after:bg-slate-700 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300"
+                                <Divider />
+                                <Button
+                                    className="bg-[#dba902] py-3 rounded-lg w-2/3 h-full font-bold my-2 hover:bg-[#186e5c] relative after:absolute after:bottom-0 after:left-0 after:bg-slate-700 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300"
                                     onClick={() => {
-                                        router.push(`../watch/${filmDetails.slug}`)
+                                        router.push(`../watch/${filmDetails.slug}?ep=${episodes[0].name}`);
                                     }}
+
                                 >
                                     Xem ngay
-                                </button>
+                                </Button>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/*<EpisodesList episodes={film.episodes} slug={slug}/>*/}
+
             </div>
+            <Divider />
+            <ChapterSelector slug={filmDetails.slug}/>
+            <Divider />
+            <b></b>
         </div>
+
     );
 }
 

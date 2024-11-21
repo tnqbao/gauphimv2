@@ -4,8 +4,8 @@ import { PageProps } from "@/utils/types";
 import { movieApiInstance } from "@/utils/axios.config";
 import nextI18NextConfig from "../../next-i18next.config.js";
 import Head from "next/head";
-import MovieCarousel from "@/components/contents/filmCarousel";
-import Filmlist from "@/components/contents/filmList";
+import MovieCarousel from "@/components/contents/film-carousel";
+import FilmList from "@/components/contents/film-list";
 
 
 const HomePage = ({
@@ -32,7 +32,7 @@ const HomePage = ({
         <meta property="og:type" content={"website"} />
       </Head>
       <MovieCarousel items={items} cdnImageDomain={cdnImageDomain} />
-      <Filmlist items={items} cdnImageDomain={cdnImageDomain} error={error} />
+      <FilmList items={items} cdnImageDomain={cdnImageDomain} error={error} />
     </div>
   );
 };
