@@ -5,6 +5,7 @@ import { useTranslation } from "next-i18next";
 import MoviesCategories from "@/components/navbar";
 import { useSelector} from "react-redux";
 import {RootState} from "@/utils/redux/store";
+import SearchBar from "@/components/search-bar";
 
 const HeaderComp: React.FC = () => {
   const router = useRouter();
@@ -24,11 +25,14 @@ const HeaderComp: React.FC = () => {
           {t("title")}
           </h1>
         </div>
-        <div className="flex space-x-2 justify-end w-full md:w-auto mt-2 md:mt-0">
+        <div className={"flex w-auto md:w-2/3"}><SearchBar/></div>
+          <div className="flex space-x-2 justify-end w-full md:w-auto mt-2 md:mt-0">
           {isAuthenticated ? (
             <div className="flex items-center">
               <span className="text-white ml-2">{`${t("welcome_user")}, ${fullname}`}</span>
+
             </div>
+
           ) : (
             <>
               <Button

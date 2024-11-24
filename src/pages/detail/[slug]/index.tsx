@@ -5,7 +5,7 @@ import { movieApiInstance } from "@/utils/axios.config";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import FilmDetail from "@/components/contents/film-detail";
 import { useDispatch } from "react-redux";
-import {addEpisode, addPosterUrl, setPlayUrl} from "@/utils/redux/store/slices/player";
+import {addEpisode, addPosterUrl, setFilmName, setPlayUrl} from "@/utils/redux/store/slices/player";
 import {changeEpisode} from "@/utils/redux/store/slices/navigate";
 
 const Detail: React.FC<{ filmDetails: Film }> = ({ filmDetails }) => {
@@ -14,6 +14,7 @@ const Detail: React.FC<{ filmDetails: Film }> = ({ filmDetails }) => {
     dispatch(addPosterUrl(filmDetails.poster_url));
     dispatch(setPlayUrl(filmDetails.episodes[0].link_m3u8));
     dispatch(changeEpisode(1))
+    dispatch(setFilmName(filmDetails.name));
     return <FilmDetail filmDetails={filmDetails}  />;
 };
 
