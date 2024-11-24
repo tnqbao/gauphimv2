@@ -7,12 +7,14 @@ interface PlayerState {
     }[];
     poster_url : string;
     player_url : string;
+    name : string;
 }
 
 const initialState: PlayerState = {
     episodes: [],
     poster_url : "",
     player_url : "",
+    name : ""
 };
 
 const playerSlice = createSlice({
@@ -27,9 +29,12 @@ const playerSlice = createSlice({
         },
         setPlayUrl : (state, action:PayloadAction<string>) => {
             state.player_url = action.payload;
+        },
+        setFilmName : (state, action:PayloadAction<string>) => {
+            state.name = action.payload
         }
     },
 });
 
-export const { addEpisode, addPosterUrl, setPlayUrl } = playerSlice.actions;
+export const { addEpisode, addPosterUrl, setPlayUrl, setFilmName } = playerSlice.actions;
 export default playerSlice.reducer;

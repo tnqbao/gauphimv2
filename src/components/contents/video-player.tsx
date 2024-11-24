@@ -13,7 +13,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ link_m3u8, poster_url }) => {
     const slug = router.query.slug as string;
     const ep = router.query.ep as string;
     const episodes = useSelector((state: RootState) => state.player.episodes);
-
     const playM3u8 = useCallback((video: HTMLVideoElement, url: string, art: Artplayer) => {
         if (Hls.isSupported()) {
             if (art.hls) art.hls.destroy();
