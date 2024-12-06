@@ -4,7 +4,7 @@ import { FilmListProps } from "@/utils/types";
 import useWindowSize from "@/contexts/WindowSizeContext";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/utils/redux/store";
-import {loadMoreItem} from "@/utils/redux/store/slices/navigate";
+import {loadMoreItem} from "@/utils/redux/slices/navigate";
 
 const FilmList: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => {
   const windowSize = useWindowSize();

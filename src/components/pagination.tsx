@@ -1,7 +1,7 @@
 import { PaginationProps } from "@/utils/types";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/utils/redux/store";
-import {changePage} from "@/utils/redux/store/slices/navigate";
+import {changePage} from "@/utils/redux/slices/navigate";
 import {useRouter} from "next/router";
 
 

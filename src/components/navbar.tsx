@@ -5,7 +5,7 @@ import { MenuOutlined, DownOutlined } from "@ant-design/icons";
 import { handleSlug } from "@/utils/helper";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/utils/redux/store";
-import {changeCate} from "@/utils/redux/store/slices/navigate";
+import {changeCate} from "@/utils/redux/slices/navigate";
 
 interface MoviesCategoriesProps {
   catesprop: string;

@@ -5,9 +5,8 @@ import { useTranslation } from "react-i18next";
 import { Button, Checkbox, Form, Input, Image } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { userApiInstance } from "@/utils/axios.config";
-import {useDispatch, useSelector} from "react-redux";
-import {addFullName, checkAuth, keepLogin} from "@/utils/redux/store/slices/auth";
-import {RootState} from "@/utils/redux/store";
+import {useDispatch} from "react-redux";
+import {setAuth, setUser} from "@/utils/redux/slices/auth";
 
 
 type FieldType = {
@@ -22,11 +21,6 @@ const Login: React.FC = () => {
   const { t } = useTranslation("login");
   const dispacth = useDispatch();
 
-  const fullname = useSelector((state: RootState) => state.auth.fullname);
-  if (fullname) {
-    router.push("../");
-  }
-
   const onFinish = async (values: FieldType) => {
     const typeWithStringField = {
       ...values,
@@ -40,11 +34,14 @@ const Login: React.FC = () => {
       );
 
       if (response.status === 200) {
-        dispacth(addFullName(response.data.user.fullname));
-        dispacth(keepLogin(typeWithStringField.keepMeLogin));
-        dispacth(checkAuth(true));
-        // login(values.username ?? "", typeWithStringField.keepMeLogin);
-        router.push("../");
+        dispacth(setUser(response.data.user))
+        dispacth(setAuth(true))
+        if (values.keepMeLogin === "true") {
+          localStorage.setItem("username", response.data.user.fullname);
+        } else {
+          sessionStorage.setItem("username", response.data.user.fullname);
+        }
+        await  router.push("../");
       }
     } catch {
       form.setFields([
