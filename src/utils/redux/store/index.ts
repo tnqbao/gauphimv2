@@ -2,16 +2,17 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import recentMoviesReducer from './slices/recentFilms';
-import playerReducer from './slices/player';
-import authReducer from './slices/auth';
-import navigateReducer from './slices/navigate';
+import authReducer from '../slices/auth';
+import playerReducer from "@/utils/redux/slices/player";
+import navigateReducer from "@/utils/redux/slices/navigate";
+import recentFilmsReducer from "@/utils/redux/slices/recentFilms";
+
 
 const rootReducer = combineReducers({
-    recentMovies: recentMoviesReducer,
-    player: playerReducer,
     auth: authReducer,
-    navigate: navigateReducer,
+    player : playerReducer,
+    navigate : navigateReducer,
+    recentFilm : recentFilmsReducer
 });
 
 const persistConfig = {

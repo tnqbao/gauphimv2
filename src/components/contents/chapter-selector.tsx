@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {setPlayUrl} from "@/utils/redux/store/slices/player";
+import {setPlayUrl} from "@/utils/redux/slices/player";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/utils/redux/store";
 import {useRouter} from "next/router";

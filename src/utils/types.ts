@@ -96,4 +96,12 @@ export interface VideoPlayerProps {
 }
 
 
+export interface UserType {
+  id: number,
+  username: string,
+  mail: string,
+  fullname: string,
+  dateOfBirth: string
+}
+
 

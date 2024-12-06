@@ -5,8 +5,8 @@ import { movieApiInstance } from "@/utils/axios.config";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import FilmDetail from "@/components/contents/film-detail";
 import { useDispatch } from "react-redux";
-import {addEpisode, addPosterUrl, setFilmName, setPlayUrl} from "@/utils/redux/store/slices/player";
-import {changeEpisode} from "@/utils/redux/store/slices/navigate";
+import {addEpisode, addPosterUrl, setFilmName, setPlayUrl} from "@/utils/redux/slices/player";
+import {changeEpisode} from "@/utils/redux/slices/navigate";
 
 const Detail: React.FC<{ filmDetails: Film }> = ({ filmDetails }) => {
     const dispatch = useDispatch();
