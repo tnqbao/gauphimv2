@@ -16,6 +16,7 @@ const FilmList: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => 
     return Math.ceil((width - 640) / 256 + 1);
   };
 
+  const { category } = useSelector((state: RootState) => state.navigate);
   const columnCount = getColumnCount();
 
   if (error) {
@@ -24,6 +25,7 @@ const FilmList: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => 
 
   return (
       <>
+        <title>{category}</title>
         <div className="flex flex-wrap justify-start mx-5 md:mx-32">
           {items.length > 0 ? (
               items.slice(0, visibleItem).map((film, index) => (
