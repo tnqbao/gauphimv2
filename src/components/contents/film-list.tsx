@@ -4,7 +4,7 @@ import { FilmListProps } from "@/utils/types";
 import useWindowSize from "@/contexts/WindowSizeContext";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/utils/redux/store";
-import {loadMoreItem} from "@/utils/redux/store/slices/navigate";
+import {loadMoreItem} from "@/utils/redux/slices/navigate";
 
 const FilmList: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => {
   const windowSize = useWindowSize();
@@ -16,6 +16,7 @@ const FilmList: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => 
     return Math.ceil((width - 640) / 256 + 1);
   };
 
+  const { category } = useSelector((state: RootState) => state.navigate);
   const columnCount = getColumnCount();
 
   if (error) {
@@ -24,6 +25,7 @@ const FilmList: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => 
 
   return (
       <>
+        <title>{category}</title>
         <div className="flex flex-wrap justify-start mx-5 md:mx-32">
           {items.length > 0 ? (
               items.slice(0, visibleItem).map((film, index) => (

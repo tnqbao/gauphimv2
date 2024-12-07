@@ -133,7 +133,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ link_m3u8, poster_url }) => {
                 art.destroy(true);
             };
         }
-    }, [link_m3u8, poster_url, playM3u8]);
+    }, [link_m3u8, poster_url, playM3u8, ep, episodes.length, router,  slug]);
 
     return (
         <div className="relative w-full pt-[56.25%] flex justify-center p-5 mt-16">

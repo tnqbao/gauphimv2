@@ -5,6 +5,7 @@
     "username": "Tên đăng nhập",
     "password": "Mật khẩu",
     "categories" : "Trang Chủ/Phim Bộ/Phim Lẻ/Hoạt Hình/Thể Loại/Quốc Gia",
-    "watch" : "Xem ngay"
+    "watch" : "Xem ngay",
+    "welcome_user" : "Xin chào, "
   }
   
