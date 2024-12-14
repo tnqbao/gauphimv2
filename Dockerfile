@@ -9,7 +9,7 @@ COPY tsconfig.json ./
 COPY next-i18next.config.js ./
 COPY next-sitemap.config.js ./
 COPY next.config.mjs ./
-COPY .env.production .env
+COPY .env .env
 
 RUN npm install --force --global yarn typescript
 
