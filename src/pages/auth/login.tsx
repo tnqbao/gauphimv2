@@ -9,7 +9,6 @@ const LoginPage: React.FC = () => {
         <>
             <Head>
                 <title>Login</title>
-                <meta name={""} />
             </Head>
             <Login />
         </>
