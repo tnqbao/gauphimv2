@@ -1,6 +1,6 @@
 name: deploy-ci-cd
 
-on: 
+on:
   push:
     branches:
       - main
@@ -11,22 +11,33 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Create SSH directory
-        run: mkdir -p ~/.ssh
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Add SSH private key
-        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
-      - name: Set permissions for SSH key
-        run: chmod 600 ~/.ssh/id_rsa
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: SSH connect, pull latest code, and restart Docker
-        env:
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-        run: |
-          ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /home/debian/gau && sudo chmod +x gauphim.sh && ./gauphim.sh"
-      - name: Remove SSH key
-        run: rm ~/.ssh/id_rsa
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: iamqbao/gauphimv2:latest
+
+      - name: Trigger deployment via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/.operator
+            sh restart_gauphimv2.sh
