@@ -34,7 +34,7 @@ COPY --from=builder /home/node/blog_frontend/next.config.mjs ./
 COPY --from=builder /home/node/blog_frontend/next-sitemap.config.js ./
 COPY --from=builder /home/node/blog_frontend/tsconfig.json ./
 COPY --from=builder /home/node/blog_frontend/i18n.ts ./
-COPY --from=builder /home/node/blog_frontend/.env.production .env
+COPY --from=builder /home/node/blog_frontend/.env .env
 
 RUN yarn install --production --frozen-lockfile
 
