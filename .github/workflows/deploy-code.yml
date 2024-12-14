@@ -21,7 +21,7 @@ jobs:
 
       - name: Set up environment variables
         run: |
-            echo "NEXT_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_USER_API }}" >> .env
+            echo "NEXT_PUBLIC_USER_API=${{ secrets.NEXT_PUBLIC_USER_API }}" >> .env
             echo "NEXT_PUBLIC_MOVIE_API=${{ secrets.NEXT_PUBLIC_MOVIE_API }}" >> .env
 
       - name: Set up QEMU
