@@ -22,12 +22,12 @@ const Category: React.FC<PageProps> = ({items, cdnImageDomain, totalItems, total
             <Head>
                 <title>{pageTitle}</title>
                 <meta name="description" content={pageDescription}/>
-                <meta name="keywords" content="danh sách phim, phim mới, phim chất lượng cao, thể loại phim"/>
+                <meta name="keywords" content="danh sách phim, phim mới, phim chất lượng cao, đủ thể loại trên Gấu Phim"/>
                 <meta property="og:title" content={pageTitle}/>
                 <meta property="og:description" content={pageDescription}/>
                 <meta property="og:url" content={pageUrl}/>
                 <meta property="og:type" content="website"/>
-                <meta property="og:image" content={`${cdnImageDomain}/default-thumbnail.jpg`}/>
+                <meta property="og:image" content={`${cdnImageDomain}/one-piece-3d-gekisou-trap-coaster.jpg`}/>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             </Head>
             <main>

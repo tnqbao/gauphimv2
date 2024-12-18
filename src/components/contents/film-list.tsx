@@ -5,6 +5,7 @@ import useWindowSize from "@/contexts/WindowSizeContext";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/utils/redux/store";
 import {loadMoreItem} from "@/utils/redux/slices/navigate";
+import {ReloadOutlined} from "@ant-design/icons";
 
 const FilmList: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => {
   const windowSize = useWindowSize();
@@ -16,7 +17,6 @@ const FilmList: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => 
     return Math.ceil((width - 640) / 256 + 1);
   };
 
-  const { category } = useSelector((state: RootState) => state.navigate);
   const columnCount = getColumnCount();
 
   if (error) {
@@ -25,8 +25,7 @@ const FilmList: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => 
 
   return (
       <>
-        <title>{category}</title>
-        <div className="flex flex-wrap justify-start mx-5 md:mx-32">
+        <div className="flex flex-wrap justify-start mx-5 md:mx-32 rounded-sm border-2 border-amber-400">
           {items.length > 0 ? (
               items.slice(0, visibleItem).map((film, index) => (
                   <div
@@ -45,14 +44,13 @@ const FilmList: React.FC<FilmListProps> = ({ items, cdnImageDomain, error }) => 
           )}
         </div>
 
-        {/* Nút để tải thêm */}
         {visibleItem < items.length && (
             <div className="flex justify-center my-5">
               <button
                   onClick={() => {dispatch(loadMoreItem())}}
-                  className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+                  className=" bg-[#dba902]/50 px-4 py-2 align-text-top w-full md:w-auto font-semibold text-white hover:bg-[#dba902] hover:text-white hover:shadow-[0px_0px_10px_3px_rgba(255,255,255,0.5)] transition duration-300 text-base sm:text-base text-nowrap"
               >
-                Load More
+                Load More <ReloadOutlined />
               </button>
             </div>
         )}

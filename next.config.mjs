@@ -13,6 +13,16 @@ const nextConfig = {
     "rc-table"
   ],
   i18n: nextI18NextConfig.i18n,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'img.ophim.live',
+        port: '',
+        pathname: '/uploads/movies/**',
+      },
+    ],
+  },
 };
 
 export default nextConfig;

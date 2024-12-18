@@ -30,6 +30,10 @@ const HomePage = ({
                     content={"Gấu Phim - Website xem phim miễn phí, chất lượng cao"}
                 />
                 <meta property="og:type" content={"website"}/>
+                <meta property={"og:title"} content={"Gấu Phim"}/>
+                <meta property={"og:description"} content={"Gấu Phim - Website xem phim miễn phí, chất lượng cao"}/>
+                <meta property={"og:image"} content={"https://i.imgur.com/sACJNuE.png"}/>
+                <meta property={"og:url"} content={"https://gauphim.daudoo.com"}/>
             </Head>
             <main>
                 <MovieCarousel items={items} cdnImageDomain={cdnImageDomain}/>
