@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 import { Button, Form, Input, Image, DatePicker } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { userApiInstance } from "@/utils/axios.config";
 import dayjs from "dayjs";
 
 type FieldType = {
