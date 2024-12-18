@@ -1,9 +1,10 @@
-import { useRouter } from "next/router";
-import { useTranslation } from "react-i18next";
-import { Button, Checkbox, Form, Image, Input } from "antd";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
-import { setAuth, setUser } from "@/utils/redux/slices/auth";
+import {useRouter} from "next/router";
+import {useTranslation} from "react-i18next";
+import {Button, Checkbox, Form, Image, Input} from "antd";
+import {LockOutlined, UserOutlined} from "@ant-design/icons";
+import {useDispatch} from "react-redux";
+import {keepLogin, setAuth, setUser} from "@/utils/redux/slices/auth";
+import {useState} from "react";
 
 type DataType = {
     username?: string;
@@ -14,7 +15,8 @@ type DataType = {
 const Login: React.FC = () => {
     const [form] = Form.useForm();
     const router = useRouter();
-    const { t } = useTranslation("login");
+    const {t} = useTranslation("login");
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
 
     const handleFormError = () => {
@@ -31,6 +33,7 @@ const Login: React.FC = () => {
     };
 
     const onFinish = async (values: DataType): Promise<void> => {
+        setLoading(true);
         try {
             const dataRequest = {
                 ...values,
@@ -52,22 +55,24 @@ const Login: React.FC = () => {
             const data = await response.json();
             dispatch(setUser(data.user));
             dispatch(setAuth(true));
-
+            dispatch(keepLogin(dataRequest.keepMeLogin));
             if (values.keepMeLogin === "true") {
                 localStorage.setItem("fullname", data.user.fullname);
             } else {
                 sessionStorage.setItem("fullname", data.user.fullname);
             }
-
             await router.push("../");
         } catch {
             handleFormError();
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
-            <div className="flex flex-col md:flex-row bg-white p-2 border rounded-lg shadow-lg max-w-4xl w-full md:my-10">
+            <div
+                className="flex flex-col md:flex-row bg-white p-2 border rounded-lg shadow-lg max-w-4xl w-full md:my-10">
                 <div className="flex flex-wrap flex-1 p-4 items-center justify-center">
                     <h1 className="text-center text-2xl font-bold mb-6 w-full">
                         {t("title")}
@@ -75,26 +80,26 @@ const Login: React.FC = () => {
                     <Form
                         form={form}
                         name="basic"
-                        initialValues={{ remember: false }}
+                        initialValues={{remember: false}}
                         onFinish={onFinish}
                         autoComplete="off"
-                        labelCol={{ span: 24 }}
+                        labelCol={{span: 24}}
                         className="flex flex-col justify-evenly w-full h-full"
                     >
                         <Form.Item
                             name="username"
                             label={t("username")}
-                            rules={[{ required: true, message: t("pleaseInputUsername") }]}
+                            rules={[{required: true, message: t("pleaseInputUsername")}]}
                         >
-                            <Input prefix={<UserOutlined />} placeholder={t("username")} />
+                            <Input prefix={<UserOutlined/>} placeholder={t("username")}/>
                         </Form.Item>
                         <Form.Item
                             name="password"
                             label={t("password")}
-                            rules={[{ required: true, message: t("pleaseInputPassword") }]}
+                            rules={[{required: true, message: t("pleaseInputPassword")}]}
                         >
                             <Input.Password
-                                prefix={<LockOutlined />}
+                                prefix={<LockOutlined/>}
                                 type="password"
                                 placeholder={t("password")}
                             />
@@ -114,7 +119,7 @@ const Login: React.FC = () => {
                         </div>
 
                         <Form.Item className="text-center">
-                            <Button type="primary" size="large" htmlType="submit">
+                            <Button type="primary" size="large" htmlType="submit" loading={loading}>
                                 {t("submitButton")}
                             </Button>
                         </Form.Item>

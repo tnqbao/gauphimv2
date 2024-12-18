@@ -11,7 +11,6 @@ const Pagination: React.FC<PaginationProps> = ({
   totalItemsPerPage,
 }) => {
   const totalPages = Math.ceil(totalItems / totalItemsPerPage) || 1;
-  // const { changePage, page } = useGlobal();
   const { page } = useSelector((state: RootState) => state.navigate);
   const dispatch = useDispatch();
   const router = useRouter();

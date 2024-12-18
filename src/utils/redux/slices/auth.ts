@@ -5,6 +5,7 @@ interface AuthState {
     user: {
         id: number,
         fullname: string,
+        permission: string,
     },
     keepMeLogin: string,
     token: string
@@ -15,6 +16,7 @@ const initialState: AuthState = {
     user: {
         id: 0,
         fullname: '',
+        permission: ''
     },
     keepMeLogin: '',
     token: ''
@@ -30,9 +32,11 @@ const authSlice = createSlice({
         setUser: (state, action: PayloadAction<{
             id: number,
             fullname: string,
+            permission: string
         }>) => {
             state.user.id = action.payload.id;
             state.user.fullname = action.payload.fullname;
+            state.user.permission = action.payload.permission;
         },
         setAuth: (state, action: PayloadAction<boolean>) => {
             state.isAuthenticated = action.payload;

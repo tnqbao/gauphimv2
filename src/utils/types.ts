@@ -104,4 +104,9 @@ export interface UserType {
   dateOfBirth: string
 }
 
-
+// category type
+export interface CategoryType {
+  id: string;
+  name: string;
+  slug: string;
+}
