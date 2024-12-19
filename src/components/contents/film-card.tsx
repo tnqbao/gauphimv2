@@ -1,7 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { FilmCardProps } from "@/utils/types";
-import Image from "next/image";
 
 const FilmCard: React.FC<FilmCardProps> = ({ film }) => {
     const router = useRouter();
