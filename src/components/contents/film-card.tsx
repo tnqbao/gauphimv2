@@ -1,7 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { FilmCardProps } from "@/utils/types";
-import Image from "next/image";
 
 const FilmCard: React.FC<FilmCardProps> = ({ film }) => {
     const router = useRouter();
@@ -25,14 +24,12 @@ const FilmCard: React.FC<FilmCardProps> = ({ film }) => {
             style={{ height: "400px" }}
         >
             <div className="relative w-full h-full">
-                <Image
+                <img
                     src={`https://img.ophim.live/uploads/movies/${film.thumb_url}`}
                     alt={film.name}
-                    layout="fill"
-                    objectFit="cover"
-                    objectPosition="center"
                     className="rounded-md"
                     loading="lazy"
+                    style={{objectFit: "cover", objectPosition: "center", width: "100%", height: "100%"}}
                 />
                 {film.quality && (
                     <span className="absolute top-2 left-2 bg-red-600 text-black text-xs font-bold px-2 py-1 rounded">
@@ -40,14 +37,16 @@ const FilmCard: React.FC<FilmCardProps> = ({ film }) => {
           </span>
                 )}
                 {film.episode_current && (
-                    <span className="absolute top-2 right-2 bg-green-600 text-black text-xs font-bold px-2 py-1 rounded">
+                    <span
+                        className="absolute top-2 right-2 bg-green-600 text-black text-xs font-bold px-2 py-1 rounded">
             {film.episode_current}
           </span>
                 )}
             </div>
-            <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black via-black/60 to-transparent">
+            <div
+                className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black via-black/60 to-transparent">
                 <div className="absolute bottom-2 left-2 right-2 text-white font-semibold text-xl">
-                    {displayName}
+                {displayName}
                 </div>
             </div>
         </div>
