@@ -6,7 +6,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === 'POST') {
         try {
             const {username, password, keepLogin} = req.body;
-            const response = await userApiInstance.post('api/auth/login', {username, password, keepLogin},
+            const response = await userApiInstance.post('api/user/public/login', {username, password, keepLogin},
                 {
                     withCredentials: true,
                 });

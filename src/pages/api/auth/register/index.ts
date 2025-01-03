@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     try {
         const {fullname, email, password, username, phone, dateOfBirth} = req.body;
-        const response = await userApiInstance.post("api/auth/register", {
+        const response = await userApiInstance.post("api/user/public/register", {
             username: username,
             password: password,
             fullname: fullname,
