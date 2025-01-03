@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(401).json({error: 'Unauthorized'});
     }
     try {
-        const response = await userApiInstance.post("/api/auth/logout", {}, {
+        const response = await userApiInstance.post("/api/user/public/logout", {}, {
             withCredentials: true,
             headers: {
                 Authorization: `${token}`,
