@@ -52,7 +52,7 @@ const ChapterSelector : React.FC<{slug : string}> = ({slug}) => {
                             }`}
                         >
                             <div
-                                className="p-2 border border-[#dba902] rounded-md flex flex-wrap text-center justify-center">
+                                className="p-2 border border-[#dba902] rounded-md flex flex-wrap text-center justify-start">
                                 {Array.isArray(episodes) &&
                                     episodes.map((episode, episodeIndex) => (
                                         <button
