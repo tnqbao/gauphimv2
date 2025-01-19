@@ -31,7 +31,7 @@ const Category: React.FC<PageProps> = ({items, cdnImageDomain, totalItems, total
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             </Head>
             <main>
-                <div className="p-10">
+                <div className="">
                     {error && <p className="text-red-500">{error}</p>}
                     <div className="pb-10">
                         <Pagination totalItems={totalItems} totalItemsPerPage={totalItemsPerPage}/>
