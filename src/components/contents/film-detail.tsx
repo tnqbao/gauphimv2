@@ -1,36 +1,35 @@
-import {Film} from "@/utils/types";
-import {useState} from "react";
-import {useRouter} from "next/router";
-import {Button, Divider, Image} from "antd";
-import {RootState} from "@/utils/redux/store";
-import {useSelector} from "react-redux";
+import { Film } from "@/utils/types";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { Button, Divider, Image } from "antd";
+import { RootState } from "@/utils/redux/store";
+import { useSelector } from "react-redux";
 import ChapterSelector from "@/components/contents/chapter-selector";
 
-const FilmDetail: React.FC<{ filmDetails: Film }> = ({filmDetails}) => {
+const FilmDetail: React.FC<{ filmDetails: Film }> = ({ filmDetails }) => {
     const [hideContent, setHideContent] = useState(true);
     const episodes = useSelector((state: RootState) => state.player.episodes);
     const router = useRouter();
     return (
-        <div>
-            <title>{filmDetails.name}</title>
-            <div className="max-w-[1400px] mx-auto px-4 md:px-8 bg-repeat bg-containe">
-                <div className="progress hidden" style={{width: "0%"}}>
+        <div className="relative">
+            <div
+                className="absolute inset-0 bg-cover bg-center filter blur-[5px]"
+                style={{
+                    backgroundImage: `url('https://img.ophim.live/uploads/movies/${filmDetails.poster_url}')`,
+                    backgroundColor: 'rgba(0, 0, 0, 0.35)',
+                    backgroundBlendMode: 'darken',
+                }}
+            ></div>
+            <div className="relative max-w-[1400px] mx-auto px-4 md:px-8 bg-repeat bg-containe">
+                <title>{filmDetails.name}</title>
+                <div className="progress hidden" style={{ width: "0%" }}>
                     <i></i>
                 </div>
                 <div className="lg:pt-20 relative overflow-hidden">
                     <div className="absolute bg-cover h-full hidden lg:block w-7/12 top-0 right-0">
-                        <div className="flex h-[115%] w-full absolute top-3/4 -left-[20%] -translate-y-2/3">
-                            <Image
-                                src={`https://img.ophim.live/uploads/movies/${filmDetails.poster_url}`}
-                                className={"h-full aspect-video m-auto flex-shrink-0 w-full object-cover blur-sm"}
-                                alt={filmDetails.name}
-                                loading={"lazy"}
-                                preview={false}
-                            />
-                        </div>
-                        <div
-                            className="absolute aspect-video md:backdrop-blur-sm h-[120%] backdrop-p z-0 top-2/3 -left-[20%] -translate-y-2/3"></div>
-                        <div className="absolute  w-1/2 h-[120%] -left-3/4 -top-[10%]"></div>
+                        <div className="flex h-[115%] w-full absolute top-3/4 -left-[20%] -translate-y-2/3"></div>
+                        <div className="absolute aspect-video md:backdrop-blur-sm h-[120%] backdrop-p z-0 top-2/3 -left-[20%] -translate-y-2/3"></div>
+                        <div className="absolute w-1/2 h-[120%] -left-3/4 -top-[10%]"></div>
                         <div className="left-layer w-[150%] h-[120%] -left-[30%] -top-[10%]"></div>
                     </div>
 
@@ -70,8 +69,8 @@ const FilmDetail: React.FC<{ filmDetails: Film }> = ({filmDetails}) => {
                     Quốc gia:&nbsp;
                   </span>
                                     <span className="px-1 border-solid text-slate-100">
-                                  {filmDetails.country}
-                                </span>
+                    {filmDetails.country}
+                  </span>
                                 </li>
                                 <li className="space-x-1 ">
                   <span className="text-foreground/50 text-[#dba902] text-lg">
@@ -94,10 +93,15 @@ const FilmDetail: React.FC<{ filmDetails: Film }> = ({filmDetails}) => {
                     Diễn viên chính: &nbsp;
                   </span>
                                     <span className="border-solid text-slate-100">
-                        <span>
-                                {filmDetails.actor.length > 0 ? filmDetails.actor.map((actor, index) => (index === filmDetails.actor.length - 1 ? actor : actor + ", ")) : "Đang cập nhật"}
-                          </span>
-
+                    <span>
+                      {filmDetails.actor.length > 0
+                          ? filmDetails.actor.map((actor, index) =>
+                              index === filmDetails.actor.length - 1
+                                  ? actor
+                                  : actor + ", "
+                          )
+                          : "Đang cập nhật"}
+                    </span>
                   </span>
                                 </li>
                             </ul>
@@ -107,10 +111,19 @@ const FilmDetail: React.FC<{ filmDetails: Film }> = ({filmDetails}) => {
                                         Miêu tả: &nbsp;
                                     </p>
                                     <p className=" text-slate-100">
-                                        {hideContent
-                                            ? <div
-                                                dangerouslySetInnerHTML={{__html: filmDetails.content.slice(0, 200)}}/> :
-                                            <div dangerouslySetInnerHTML={{__html: filmDetails.content}}/>}
+                                        {hideContent ? (
+                                            <div
+                                                dangerouslySetInnerHTML={{
+                                                    __html: filmDetails.content.slice(0, 200),
+                                                }}
+                                            />
+                                        ) : (
+                                            <div
+                                                dangerouslySetInnerHTML={{
+                                                    __html: filmDetails.content,
+                                                }}
+                                            />
+                                        )}
                                     </p>
                                     <button
                                         className="m-0 p-0 focus:outline-none text-[#a79047] drop-shadow-2xl"
@@ -118,17 +131,14 @@ const FilmDetail: React.FC<{ filmDetails: Film }> = ({filmDetails}) => {
                                     >
                                         {hideContent ? "Hiển Thị Thêm" : "Ẩn Bớt"}
                                     </button>
-
-
                                 </div>
-                                <br/>
-                                <Divider/>
+                                <br />
+                                <Divider />
                                 <Button
                                     className="bg-[#dba902] py-3 rounded-lg w-2/3 h-full font-bold my-2 hover:bg-[#186e5c] relative after:absolute after:bottom-0 after:left-0 after:bg-slate-700 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300"
                                     onClick={() => {
                                         router.push(`../watch/${filmDetails.slug}?ep=${episodes[0].name}`);
                                     }}
-
                                 >
                                     Xem ngay
                                 </Button>
@@ -136,15 +146,13 @@ const FilmDetail: React.FC<{ filmDetails: Film }> = ({filmDetails}) => {
                         </div>
                     </div>
                 </div>
-
             </div>
-            <Divider/>
-            <ChapterSelector slug={filmDetails.slug}/>
-            <Divider/>
+            <Divider />
+            <ChapterSelector slug={filmDetails.slug} />
+            <Divider />
             <b></b>
         </div>
-
     );
-}
+};
 
 export default FilmDetail;

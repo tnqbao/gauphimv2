@@ -149,7 +149,7 @@ const Navbar: React.FC = () => {
                     </button>
                 </Dropdown>
             </div>
-            <nav className="hidden md:flex justify-evenly items-center p-4 flex-wrap gap-2">
+            <nav className="hidden md:flex justify-evenly items-center p-4 flex-wrap gap-2 bg-black">
                 {categoriesList.map(renderCategoryButton)}
             </nav>
         </>

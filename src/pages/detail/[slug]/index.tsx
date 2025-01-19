@@ -8,6 +8,8 @@ import {useDispatch} from "react-redux";
 import {addEpisode, addPosterUrl, setFilmName, setPlayUrl} from "@/utils/redux/slices/player";
 import {changeEpisode} from "@/utils/redux/slices/navigate";
 import Head from "next/head";
+import {Divider} from "antd";
+import ChapterSelector from "@/components/contents/chapter-selector";
 
 const Detail: React.FC<{ filmDetails: Film }> = ({filmDetails}) => {
     const dispatch = useDispatch();
@@ -36,6 +38,8 @@ const Detail: React.FC<{ filmDetails: Film }> = ({filmDetails}) => {
             </Head>
             <main>
                 <FilmDetail filmDetails={filmDetails}/>
+                <Divider/>
+                <ChapterSelector slug={filmDetails.slug}/>
             </main>
         </>
     )
